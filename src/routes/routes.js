@@ -1,18 +1,29 @@
+import routes from "../config/routes";
 import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
+import PostManagePage from "../pages/PostManagePage";
 import RegisterPage from "../pages/RegisterPage";
+import UserManagePage from "../pages/UserManagePage";
 
 export const publicRoutes = [
   {
-    path: "/",
+    path: routes.home,
     component: <DashboardPage />,
   },
   {
-    path: "/login",
+    path: routes.login,
     component: <LoginPage />,
   },
   {
-    path: "/register",
+    path: routes.register,
     component: <RegisterPage />,
+  },
+  {
+    path: routes.post_manage,
+    component: <PostManagePage />,
+  },
+  {
+    path: routes.user_manage,
+    component: <UserManagePage />,
   },
 ];
