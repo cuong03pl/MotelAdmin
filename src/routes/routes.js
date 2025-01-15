@@ -3,6 +3,7 @@ import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
 import PostManagePage from "../pages/PostManagePage";
 import RegisterPage from "../pages/RegisterPage";
+import ReportManagePage from "../pages/ReportManagePage";
 import UserManagePage from "../pages/UserManagePage";
 
 export const publicRoutes = [
@@ -25,5 +26,9 @@ export const publicRoutes = [
   {
     path: routes.user_manage,
     component: <UserManagePage />,
+  },
+  {
+    path: routes.report_manage,
+    component: <ReportManagePage />,
   },
 ];
