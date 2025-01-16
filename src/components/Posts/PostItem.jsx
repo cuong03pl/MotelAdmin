@@ -30,34 +30,24 @@ export default function PostItem({ post, onDelete }) {
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">
-        <td class="px-2">
+        <td class="p-4">
           <div class="flex items-center text-sm">
-            <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-              <img
-                class="object-cover w-full h-full rounded-full"
-                src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                alt=""
-                loading="lazy"
-              />
-              <div
-                class="absolute inset-0 rounded-full shadow-inner"
-                aria-hidden="true"
-              ></div>
-            </div>
             <div>
-              <p class="font-semibold">Hans Burger</p>
+              <p class="font-semibold text-nowrap">Hans Burger</p>
               <p class="text-xs text-gray-600 dark:text-gray-400">0123547589</p>
             </div>
           </div>
         </td>
-        <td class="text-sm min-w-[200px]">{post?.title}</td>
-        <td class=" text-sm line-clamp-3">{post?.description}</td>
-        <td class="px-2 text-sm">{post?.price}</td>
-        <td class="px-2 text-sm text-nowrap">{`${post?.location.province}-${post?.location?.district}`}</td>
-        <td class="px-2 text-sm text-nowrap">
+        <td class="p-4 text-sm min-w-[200px]">{post?.title}</td>
+        <td class="p-4 text-sm">
+          <div className="text-sm line-clamp-4">{post?.description}</div>
+        </td>
+        <td class="p-4 text-sm">{post?.price}</td>
+        <td class="p-4 text-sm text-nowrap">{`${post?.location.province} - ${post?.location?.district}`}</td>
+        <td class="p-4 text-sm text-nowrap">
           {post?.area} km<sup>2</sup>
         </td>
-        <td class="px-2 text-xs">
+        <td class="p-4 text-xs">
           {post?.available && (
             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
               True
@@ -69,7 +59,7 @@ export default function PostItem({ post, onDelete }) {
             </span>
           )}
         </td>
-        <td class="px-2 text-xs">
+        <td class="p-4 text-xs">
           {isBrowse === 1 && (
             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
               True
@@ -160,20 +150,6 @@ export default function PostItem({ post, onDelete }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center">
-                <div class="relative hidden w-10 h-10 mr-3 rounded-full md:block">
-                  <img
-                    class="object-cover w-full h-full rounded-full"
-                    src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                    alt=""
-                    loading="lazy"
-                  />
-                  <div
-                    class="absolute inset-0 rounded-full shadow-inner"
-                    aria-hidden="true"
-                  ></div>
-                </div>
-              </div>
               <div className="">
                 <label class="block text-sm mb-2">
                   <span class="text-gray-700 dark:text-gray-400">Name</span>
@@ -198,12 +174,13 @@ export default function PostItem({ post, onDelete }) {
 
             <label class="block text-sm mb-2">
               <span class="text-gray-700 dark:text-gray-400">Description</span>
-              <input
+              <textarea
+                rows={5}
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
                 readOnly
                 value={post?.description}
-              />
+              ></textarea>
             </label>
 
             <label class="block text-sm mb-2">

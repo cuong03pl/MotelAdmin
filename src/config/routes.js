@@ -5,5 +5,6 @@ const routes = {
   post_manage: "/posts",
   user_manage: "/users",
   report_manage: "/reports",
+  review_manage: "/reviews",
 };
 export default routes;

@@ -1,48 +1,49 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-export default function UserItem({ user, onDelete }) {
+export default function ReportItem({ report, onDelete }) {
+  const [isBrowse, setIsBrowse] = useState(report?.status);
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenBlock, setIsOpenBlock] = useState(false);
+  const [isOpenBrowse, setIsOpenBrowse] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
-  const [isBlock, setIsBlock] = useState(user?.isBlock);
   const handleOpenModal = () => {
     setIsOpen(isOpen ? false : true);
   };
-  const handleOpenModalBlock = () => {
-    setIsOpenBlock(isOpenBlock ? false : true);
-  };
-  const handleBlock = async (status) => {
-    try {
-      await axios.put(
-        `https://localhost:7224/api/Users/block?id=${user?.id}&is_block=${status}`
-      );
-      setIsBlock(status);
-      setIsOpenBlock(false);
-    } catch (error) {
-      console.error("Error updating post:", error);
-    }
+  const handleOpenModalBrowse = () => {
+    setIsOpenBrowse(isOpenBrowse ? false : true);
   };
   const handleOpenModalDelete = () => {
     setIsOpenDelete(isOpenDelete ? false : true);
   };
+  const handleBrowse = async (status) => {
+    try {
+      await axios.put(
+        `https://localhost:7224/api/Reports/Browse?id=${report?.id}`
+      );
+      setIsBrowse(status);
+      setIsOpenBrowse(false);
+    } catch (error) {
+      console.error("Error updating report:", error);
+    }
+  };
+
   const handleDelete = async (id) => {
     onDelete(id, handleOpenModalDelete);
   };
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">
-        <td class="p-4 text-sm">{user?.fullName}</td>
-        <td class="p-4 text-sm">{user?.userName}</td>
-        <td class="p-4 text-sm">{user?.email ?? "-"}</td>
-        <td class="p-4 text-sm text-nowrap">{user?.phoneNumber}</td>
+        <td class="p-4 text-sm">Cường 1</td>
+        <td class="p-4 text-sm">Bai 1</td>
+        <td class="p-4 text-sm">{report?.reason ?? "-"}</td>
+        <td class="p-4 text-sm text-nowrap">{report?.note}</td>
         <td class="p-4 text-xs">
-          {isBlock && (
+          {isBrowse === 1 && (
             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
               True
             </span>
           )}
-          {!isBlock && (
+          {isBrowse === 0 && (
             <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
               False
             </span>
@@ -51,7 +52,7 @@ export default function UserItem({ user, onDelete }) {
         <td class="p-4">
           <div class="flex items-center text-sm">
             <button
-              onClick={handleOpenModalBlock}
+              onClick={handleOpenModalBrowse}
               class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
             >
               <svg
@@ -133,38 +134,48 @@ export default function UserItem({ user, onDelete }) {
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
                 readOnly
-                value={user?.fullName}
+                value={"Cuong 1"}
+              />
+            </label>
+            <label class="block text-sm mb-2">
+              <span class="text-gray-700 dark:text-gray-400">Title</span>
+              <input
+                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                placeholder=""
+                readOnly
+                value={"Bai 1"}
+              />
+            </label>
+            <label class="block text-sm mb-2">
+              <span class="text-gray-700 dark:text-gray-400">Reason</span>
+              <input
+                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                placeholder=""
+                readOnly
+                value={report?.reason}
               />
             </label>
 
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Phone</span>
-              <input
+              <span class="text-gray-700 dark:text-gray-400">Note</span>
+              <textarea
+                rows={5}
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
                 readOnly
-                value={user?.phoneNumber}
-              />
-            </label>
-            <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Email</span>
-              <input
-                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
-                placeholder=""
-                readOnly
-                value={user?.email}
-              />
+                value={report?.note}
+              ></textarea>
             </label>
             <div className="flex gap-6">
               <label class="flex items-center gap-4 text-sm  ">
-                <span class="text-gray-700 dark:text-gray-400">Block: </span>
-                {isBlock && (
+                <span class="text-gray-700 dark:text-gray-400">Status: </span>
+                {isBrowse && (
                   <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                     True
                   </span>
                 )}
 
-                {!isBlock && (
+                {!isBrowse && (
                   <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
                     False
                   </span>
@@ -174,16 +185,16 @@ export default function UserItem({ user, onDelete }) {
           </div>
         </div>
       )}
-      {isOpenBlock && (
+      {isOpenBrowse && (
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
             <div className="flex items-center justify-between mb-4">
               <div className="text-[24px] font-semibold">
-                {!isBlock ? "Browse" : "Unsubscribe"}
+                {!report?.status ? "Browse" : "Unsubscribe"}
               </div>
               <div className="">
                 <button
-                  onClick={handleOpenModalBlock}
+                  onClick={handleOpenModalBrowse}
                   class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                 >
                   <svg
@@ -202,24 +213,24 @@ export default function UserItem({ user, onDelete }) {
               </div>
             </div>
             <div className="">
-              {!isBlock
-                ? "Are you sure you want to block this article?"
-                : "Are you sure you want to unblock this post?"}
+              {isBrowse
+                ? "Are you sure you want to browse this report?"
+                : "Are you sure you want to unsubscribe this report?"}
             </div>
             <div className="flex justify-end">
-              {!isBlock ? (
+              {!isBrowse ? (
                 <button
-                  onClick={() => handleBlock(true)}
+                  onClick={() => handleBrowse(1)}
                   className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                 >
-                  Block
+                  Browse
                 </button>
               ) : (
                 <button
-                  onClick={() => handleBlock(false)}
+                  onClick={() => handleBrowse(0)}
                   className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                 >
-                  Unblock
+                  Unsubscribe
                 </button>
               )}
             </div>
@@ -256,7 +267,7 @@ export default function UserItem({ user, onDelete }) {
             </div>
             <div className="flex justify-end">
               <button
-                onClick={() => handleDelete(user?.id)}
+                onClick={() => handleDelete(report?.id)}
                 className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Delete

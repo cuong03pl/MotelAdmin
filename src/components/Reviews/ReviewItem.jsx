@@ -1,27 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
 
-export default function UserItem({ user, onDelete }) {
+export default function ReviewItem({ review, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenBlock, setIsOpenBlock] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
-  const [isBlock, setIsBlock] = useState(user?.isBlock);
   const handleOpenModal = () => {
     setIsOpen(isOpen ? false : true);
-  };
-  const handleOpenModalBlock = () => {
-    setIsOpenBlock(isOpenBlock ? false : true);
-  };
-  const handleBlock = async (status) => {
-    try {
-      await axios.put(
-        `https://localhost:7224/api/Users/block?id=${user?.id}&is_block=${status}`
-      );
-      setIsBlock(status);
-      setIsOpenBlock(false);
-    } catch (error) {
-      console.error("Error updating post:", error);
-    }
   };
   const handleOpenModalDelete = () => {
     setIsOpenDelete(isOpenDelete ? false : true);
@@ -32,37 +15,13 @@ export default function UserItem({ user, onDelete }) {
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">
-        <td class="p-4 text-sm">{user?.fullName}</td>
-        <td class="p-4 text-sm">{user?.userName}</td>
-        <td class="p-4 text-sm">{user?.email ?? "-"}</td>
-        <td class="p-4 text-sm text-nowrap">{user?.phoneNumber}</td>
-        <td class="p-4 text-xs">
-          {isBlock && (
-            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-              True
-            </span>
-          )}
-          {!isBlock && (
-            <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-              False
-            </span>
-          )}
-        </td>
+        <td class="p-4 text-sm">Cuong hoang</td>
+        <td class="p-4 text-sm">thue nha 1</td>
+        <td class="p-4 text-sm">{review?.comment}</td>
+        <td class="p-4 text-sm">{review?.createAt}</td>
+        <td class="p-4 text-sm">{review?.updateAt}</td>
         <td class="p-4">
           <div class="flex items-center text-sm">
-            <button
-              onClick={handleOpenModalBlock}
-              class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-            >
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-              </svg>
-            </button>
             <button
               onClick={handleOpenModal}
               class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -128,101 +87,52 @@ export default function UserItem({ user, onDelete }) {
             </div>
 
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Full Name</span>
+              <span class="text-gray-700 dark:text-gray-400">User Name</span>
               <input
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
                 readOnly
-                value={user?.fullName}
+                value={"Cuong 1"}
               />
             </label>
 
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Phone</span>
+              <span class="text-gray-700 dark:text-gray-400">Post title</span>
               <input
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
                 readOnly
-                value={user?.phoneNumber}
+                value={"Thue nha 1"}
               />
             </label>
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Email</span>
+              <span class="text-gray-700 dark:text-gray-400">Comment</span>
+              <textarea
+                rows={4}
+                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                placeholder=""
+                readOnly
+                value={review?.comment}
+              ></textarea>
+            </label>
+            <label class="block text-sm mb-2">
+              <span class="text-gray-700 dark:text-gray-400">Create At</span>
               <input
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
                 readOnly
-                value={user?.email}
+                value={review?.createAt}
               />
             </label>
-            <div className="flex gap-6">
-              <label class="flex items-center gap-4 text-sm  ">
-                <span class="text-gray-700 dark:text-gray-400">Block: </span>
-                {isBlock && (
-                  <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                    True
-                  </span>
-                )}
-
-                {!isBlock && (
-                  <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-                    False
-                  </span>
-                )}
-              </label>
-            </div>
-          </div>
-        </div>
-      )}
-      {isOpenBlock && (
-        <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
-          <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-[24px] font-semibold">
-                {!isBlock ? "Browse" : "Unsubscribe"}
-              </div>
-              <div className="">
-                <button
-                  onClick={handleOpenModalBlock}
-                  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className="">
-              {!isBlock
-                ? "Are you sure you want to block this article?"
-                : "Are you sure you want to unblock this post?"}
-            </div>
-            <div className="flex justify-end">
-              {!isBlock ? (
-                <button
-                  onClick={() => handleBlock(true)}
-                  className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                >
-                  Block
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleBlock(false)}
-                  className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                >
-                  Unblock
-                </button>
-              )}
-            </div>
+            <label class="block text-sm mb-2">
+              <span class="text-gray-700 dark:text-gray-400">Update At</span>
+              <input
+                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                placeholder=""
+                readOnly
+                value={review?.updateAt}
+              />
+            </label>
           </div>
         </div>
       )}
@@ -251,12 +161,10 @@ export default function UserItem({ user, onDelete }) {
                 </button>
               </div>
             </div>
-            <div className="">
-              Are you sure you want to delete this article?
-            </div>
+            <div className="">Are you sure you want to delete this review?</div>
             <div className="flex justify-end">
               <button
-                onClick={() => handleDelete(user?.id)}
+                onClick={() => handleDelete(review.id)}
                 className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               >
                 Delete

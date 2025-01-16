@@ -1,22 +1,24 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Posts from "../components/Posts/Posts";
+import Reviews from "../components/Reviews/Reviews";
+import axios from "axios";
 
-export default function PostManagePage() {
-  const [posts, setPosts] = useState([]);
+export default function ReviewManagePage() {
+  const [reviews, setReviews] = useState([]);
   const [isReload, setIsReload] = useState(false);
+
   useEffect(() => {
     const fetchAPI = () => {
       axios
-        .get("https://localhost:7224/api/Posts")
-        .then((res) => setPosts(res.data))
+        .get("https://localhost:7224/api/Reviews")
+        .then((res) => setReviews(res.data))
         .catch((err) => console.log(err));
     };
     fetchAPI();
   }, [isReload]);
-  const handleDeletePost = async (id, handleOpenModalDelete) => {
+
+  const handleDelete = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://localhost:7224/api/Posts/${id}`);
+      await axios.delete(`https://localhost:7224/api/Reviews/${id}`);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {
@@ -25,24 +27,21 @@ export default function PostManagePage() {
   };
   return (
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-      <div class="text-[24px] font-semibold">Post Manage</div>
+      <div class="text-[24px] font-semibold">Review Manage</div>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th class="p-4">Owner</th>
-              <th class="p-4">Title</th>
-              <th class="p-4">Description</th>
-              <th class="p-4">Price</th>
-              <th class="p-4">Location</th>
-              <th class="p-4">Area</th>
-              <th class="p-4">Available</th>
-              <th class="p-4">Browser</th>
+              <th class="p-4">User Name</th>
+              <th class="p-4">Post Title</th>
+              <th class="p-4">Comment</th>
+              <th class="p-4">Create At</th>
+              <th class="p-4">Update At</th>
               <th class="p-4">Actions</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-            <Posts onDelete={handleDeletePost} posts={posts} />
+            <Reviews onDelete={handleDelete} reviews={reviews} />
           </tbody>
         </table>
       </div>
