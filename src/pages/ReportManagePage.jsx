@@ -26,7 +26,7 @@ export default function ReportManagePage() {
   };
   return (
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-      <div class="text-[24px] font-semibold">User Manage</div>
+      <div class="text-[24px] font-semibold">Report Manage</div>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>

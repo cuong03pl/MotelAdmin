@@ -25,38 +25,40 @@ export default function UserManagePage() {
     }
   };
   return (
-    <div class="w-full overflow-hidden rounded-lg shadow-xs">
-      <div class="text-[24px] font-semibold">User Manage</div>
-      <div class="w-full overflow-x-auto">
-        <table class="w-full whitespace-no-wrap">
+    <div className="w-full overflow-hidden rounded-lg shadow-xs">
+      <div className="text-[24px] font-semibold">User Manage</div>
+      <div className="w-full overflow-x-auto">
+        <table className="w-full whitespace-no-wrap">
           <thead>
-            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th class="p-4">Full Name</th>
-              <th class="p-4">User Name</th>
-              <th class="p-4">Email</th>
-              <th class="p-4">Phone</th>
-              <th class="p-4">Block</th>
-              <th class="p-4">Actions</th>
+            <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+              <th className="p-4">Full Name</th>
+              <th className="p-4">User Name</th>
+              <th className="p-4">Email</th>
+              <th className="p-4">Phone</th>
+              <th className="p-4">Block</th>
+              <th className="p-4">Actions</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
             <Users onDelete={handleDelete} users={users} />
           </tbody>
         </table>
       </div>
-      <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-        <span class="flex items-center col-span-3">Showing 21-30 of 100</span>
-        <span class="col-span-2"></span>
-        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+      <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+        <span className="flex items-center col-span-3">
+          Showing 21-30 of 100
+        </span>
+        <span className="col-span-2"></span>
+        <span className="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
           <nav aria-label="Table navigation">
-            <ul class="inline-flex items-center">
+            <ul className="inline-flex items-center">
               <li>
                 <button
-                  class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                  className="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
                   aria-label="Previous"
                 >
                   <svg
-                    class="w-4 h-4 fill-current"
+                    className="w-4 h-4 fill-current"
                     aria-hidden="true"
                     viewBox="0 0 20 20"
                   >
@@ -69,45 +71,45 @@ export default function UserManagePage() {
                 </button>
               </li>
               <li>
-                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                   1
                 </button>
               </li>
               <li>
-                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                   2
                 </button>
               </li>
               <li>
-                <button class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
+                <button className="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
                   3
                 </button>
               </li>
               <li>
-                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                   4
                 </button>
               </li>
               <li>
-                <span class="px-3 py-1">...</span>
+                <span className="px-3 py-1">...</span>
               </li>
               <li>
-                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                   8
                 </button>
               </li>
               <li>
-                <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                   9
                 </button>
               </li>
               <li>
                 <button
-                  class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+                  className="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
                   aria-label="Next"
                 >
                   <svg
-                    class="w-4 h-4 fill-current"
+                    className="w-4 h-4 fill-current"
                     aria-hidden="true"
                     viewBox="0 0 20 20"
                   >

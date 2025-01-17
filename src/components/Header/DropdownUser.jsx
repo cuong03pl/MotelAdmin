@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UserOne from "../../images/user/user-01.png";
 import ClickOutside from "../ClickOutside";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../features/user/userSlice";
+import { jwtDecode } from "jwt-decode";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state?.user?.user_token);
+  useEffect(() => {
+    if (token) {
+      const user_data = jwtDecode(token);
+      setUser(user_data);
+    }
+  }, [token]);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -15,9 +27,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {user?.name}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">Admin</span>
         </span>
         <span className="h-12 w-12 rounded-full">
           <img src={UserOne} alt="User" />
@@ -59,8 +71,8 @@ const DropdownUser = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="#"
+              <button
+                onClick={() => dispatch(logOut())}
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
@@ -72,25 +84,8 @@ const DropdownUser = () => {
                 >
                   <path d="M17.669 1.444c-.55-.55-1.238-.826-1.994-.826H7.425c-1.169 0-2.166.963-2.166 2.166v1.34H4.297c-.412 0-.79.344-.79.791 0 .447.344.79.79.79h.963v4.572H4.297c-.412 0-.79.344-.79.791 0 .447.344.79.79.79h.963v4.572H4.297c-.412 0-.79.344-.79.79 0 .447.344.79.79.79h.963v1.238c0 1.169.963 2.166 2.166 2.166h8.25c1.546 0 2.818-1.272 2.853-2.818V3.472c-.035-.79-.31-1.511-.86-2.027z" />
                 </svg>
-                My Contacts
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/settings"
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-              >
-                <svg
-                  className="fill-current"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="..." />
-                </svg>
-                Settings
-              </Link>
+                Log Out
+              </button>
             </li>
           </ul>
         </div>
