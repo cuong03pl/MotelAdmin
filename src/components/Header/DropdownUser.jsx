@@ -5,6 +5,7 @@ import ClickOutside from "../ClickOutside";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -12,9 +13,18 @@ const DropdownUser = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.user?.user_token);
   useEffect(() => {
-    if (token) {
+    const fetchAPI = async () => {
       const user_data = jwtDecode(token);
-      setUser(user_data);
+      console.log(user_data);
+
+      await axios
+        .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
+        .then((res) => {
+          setUser(res.data);
+        });
+    };
+    if (token) {
+      fetchAPI();
     }
   }, [token]);
 
@@ -27,9 +37,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {user?.name}
+            {user?.fullName}
           </span>
-          <span className="block text-xs">Admin</span>
+          <span className="block text-xs"> {user?.email}</span>
         </span>
         <span className="h-12 w-12 rounded-full">
           <img src={UserOne} alt="User" />

@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { publicRoutes } from "./routes/routes";
 import { Fragment, useEffect } from "react";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
@@ -10,11 +10,14 @@ function App() {
   const navigate = useNavigate();
   const token = useSelector((state) => state.user?.user_token);
   const dispatch = useDispatch();
-
+  const location = useLocation();
   useEffect(() => {
-    if (isTokenExpired(token) || token === "") {
-      navigate("/login");
-      dispatch(logOut());
+    const publicPages = ["/register"];
+    if (!publicPages.includes(location.pathname)) {
+      if (isTokenExpired(token) || token === "") {
+        navigate("/login");
+        dispatch(logOut());
+      }
     }
   }, [navigate, token]);
 

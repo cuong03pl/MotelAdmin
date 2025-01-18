@@ -3,13 +3,47 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setUser } from "../features/user/userSlice";
-
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
   const dispatch = useDispatch();
 
+  const schema = yup
+    .object({
+      email: yup
+        .string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: yup
+        .string()
+        .min(6, "Password must be at least 8 characters long")
+        .matches(/[A-Z]/, "Password must have at least one uppercase letter")
+        .matches(/\d/, "Password must have at least one digit")
+        .matches(
+          /[^A-Za-z0-9]/,
+          "Password must have at least one non-alphanumeric character"
+        )
+        .required("Password is required"),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const notifyInvalid = () =>
+    toast.error("Your username or password is invalid. Please try again.", {
+      position: "bottom-right",
+      pauseOnHover: false,
+    });
   const handleLogin = async () => {
     await axios
       .post("https://localhost:7224/api/Auth/login", {
@@ -17,8 +51,11 @@ export default function LoginPage() {
         password,
       })
       .then((res) => {
-        dispatch(setUser(res.data));
-        window.location.href = "/";
+        notifyInvalid();
+        if (res.data) {
+          dispatch(setUser(res.data));
+          window.location.href = "/";
+        }
       });
   };
 
@@ -171,14 +208,13 @@ export default function LoginPage() {
                   </label>
                   <div className="relative">
                     <input
+                      {...register("email")}
                       autoComplete
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
-                      type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
-
                     <span className="absolute right-4 top-4">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -197,6 +233,11 @@ export default function LoginPage() {
                       </svg>
                     </span>
                   </div>
+                  {errors.email && (
+                    <span className="text-[#ff0000] text-[14px]">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-6">
@@ -206,6 +247,7 @@ export default function LoginPage() {
                   <div className="relative">
                     <input
                       autoComplete
+                      {...register("password")}
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}
                       type={isShowPass ? "text" : "password"}
@@ -266,11 +308,17 @@ export default function LoginPage() {
                       )}
                     </span>
                   </div>
+                  {errors.password && (
+                    <span className="text-[#ff0000] text-[14px]">
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-5">
                   <button
-                    onClick={handleLogin}
+                    type="button"
+                    onClick={handleSubmit(handleLogin)}
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   >
                     Sign In
@@ -317,7 +365,7 @@ export default function LoginPage() {
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
-                    <Link to="/signup" className="text-primary">
+                    <Link to="/register" className="text-primary">
                       Sign Up
                     </Link>
                   </p>
