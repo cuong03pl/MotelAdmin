@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import TinyEditor from "../Editor/Editor";
 
 export default function PostItem({ post, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -126,7 +127,7 @@ export default function PostItem({ post, onDelete }) {
       </tr>
       {isOpen && (
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
-          <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
+          <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px] max-h-[500px] overflow-y-scroll">
             <div className="flex items-center justify-between mb-4">
               <div className="text-[24px] font-semibold">Detail</div>
               <div className="">
@@ -174,13 +175,7 @@ export default function PostItem({ post, onDelete }) {
 
             <label class="block text-sm mb-2">
               <span class="text-gray-700 dark:text-gray-400">Description</span>
-              <textarea
-                rows={5}
-                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
-                placeholder=""
-                readOnly
-                value={post?.description}
-              ></textarea>
+              <TinyEditor readOnly data={post?.description} />
             </label>
 
             <label class="block text-sm mb-2">
@@ -249,7 +244,7 @@ export default function PostItem({ post, onDelete }) {
       )}
       {isOpenBrowse && (
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
-          <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
+          <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px] ">
             <div className="flex items-center justify-between mb-4">
               <div className="text-[24px] font-semibold">
                 {!post?.is_Browse ? "Browse" : "Unsubscribe"}

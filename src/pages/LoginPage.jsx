@@ -51,10 +51,11 @@ export default function LoginPage() {
         password,
       })
       .then((res) => {
-        notifyInvalid();
         if (res.data) {
           dispatch(setUser(res.data));
           window.location.href = "/";
+        } else {
+          notifyInvalid();
         }
       });
   };
