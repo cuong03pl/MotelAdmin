@@ -33,8 +33,8 @@ export default function ReportItem({ report, onDelete }) {
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">
-        <td class="p-4 text-sm">Cường 1</td>
-        <td class="p-4 text-sm">Bai 1</td>
+        <td class="p-4 text-sm">{report?.user?.fullName}</td>
+        <td class="p-4 text-sm">{report?.post?.title}</td>
         <td class="p-4 text-sm">{report?.reason ?? "-"}</td>
         <td class="p-4 text-sm text-nowrap">{report?.note}</td>
         <td class="p-4 text-xs">

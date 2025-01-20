@@ -15,8 +15,8 @@ export default function ReviewItem({ review, onDelete }) {
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">
-        <td class="p-4 text-sm">Cuong hoang</td>
-        <td class="p-4 text-sm">thue nha 1</td>
+        <td class="p-4 text-sm">{review?.user?.fullName}</td>
+        <td class="p-4 text-sm">{review?.post?.title}</td>
         <td class="p-4 text-sm">{review?.comment}</td>
         <td class="p-4 text-sm">{review?.createAt}</td>
         <td class="p-4 text-sm">{review?.updateAt}</td>

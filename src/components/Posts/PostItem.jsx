@@ -34,8 +34,10 @@ export default function PostItem({ post, onDelete }) {
         <td class="p-4">
           <div class="flex items-center text-sm">
             <div>
-              <p class="font-semibold text-nowrap">Hans Burger</p>
-              <p class="text-xs text-gray-600 dark:text-gray-400">0123547589</p>
+              <p class="font-semibold text-nowrap">{post?.user?.fullName}</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">
+                {post?.user?.phoneNumber}
+              </p>
             </div>
           </div>
         </td>
