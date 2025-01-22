@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function UserItem({ user, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +29,10 @@ export default function UserItem({ user, onDelete }) {
   const handleDelete = async (id) => {
     onDelete(id, handleOpenModalDelete);
   };
+  useEffect(() => {
+    setIsBlock(user?.isBlock);
+  }, [user]);
+
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">

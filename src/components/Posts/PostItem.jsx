@@ -28,6 +28,9 @@ export default function PostItem({ post, onDelete }) {
   const handleDeletePost = async (id) => {
     onDelete(id, handleOpenModalDelete);
   };
+  useEffect(() => {
+    setIsBrowse(post.is_Browse);
+  }, [post]);
   return (
     <>
       <tr class="text-gray-700 dark:text-gray-400">

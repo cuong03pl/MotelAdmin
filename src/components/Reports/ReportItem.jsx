@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ReportItem({ report, onDelete }) {
   const [isBrowse, setIsBrowse] = useState(report?.status);
@@ -26,6 +26,9 @@ export default function ReportItem({ report, onDelete }) {
       console.error("Error updating report:", error);
     }
   };
+  useEffect(() => {
+    setIsBrowse(report?.status);
+  }, [report]);
 
   const handleDelete = async (id) => {
     onDelete(id, handleOpenModalDelete);
@@ -169,13 +172,13 @@ export default function ReportItem({ report, onDelete }) {
             <div className="flex gap-6">
               <label class="flex items-center gap-4 text-sm  ">
                 <span class="text-gray-700 dark:text-gray-400">Status: </span>
-                {isBrowse && (
+                {isBrowse === 1 && (
                   <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                     True
                   </span>
                 )}
 
-                {!isBrowse && (
+                {isBrowse === 0 && (
                   <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
                     False
                   </span>

@@ -15,7 +15,6 @@ const DropdownUser = () => {
   useEffect(() => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
-      console.log(user_data);
 
       await axios
         .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
