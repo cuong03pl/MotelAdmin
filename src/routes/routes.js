@@ -1,6 +1,8 @@
 import routes from "../config/routes";
+import CategoryManagePage from "../pages/CategoryManagePage";
 import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
+import NewsManagePage from "../pages/NewsManagePage";
 import PostManagePage from "../pages/PostManagePage";
 import RegisterPage from "../pages/RegisterPage";
 import ReportManagePage from "../pages/ReportManagePage";
@@ -37,5 +39,15 @@ export const publicRoutes = [
   {
     path: routes.review_manage,
     component: <ReviewManagePage />,
+  },
+
+  {
+    path: routes.news_manage,
+    component: <NewsManagePage />,
+  },
+
+  {
+    path: routes.category_manage,
+    component: <CategoryManagePage />,
   },
 ];

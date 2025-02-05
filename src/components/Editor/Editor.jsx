@@ -1,24 +1,26 @@
 import React from "react";
-import { useRef } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-export default function TinyEditor({ data }) {
-  const editorRef = useRef(null);
-
+import ReactQuill from "react-quill";
+const modules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    ["blockquote", "code-block"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+    ["link", "image", "video"],
+    ["clean"],
+  ],
+};
+export default function TinyEditor({ data, onChange }) {
   return (
-    <>
-      <Editor
-        apiKey="38i5vfrydzs2luzbra2qnkcxm1ezyqdhntpk3smi5dob07p4"
-        onInit={(_evt, editor) => (editorRef.current = editor)}
-        initialValue={data}
-        disabled={true}
-        init={{
-          height: 300,
-          menubar: false,
-          readonly: true,
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-        }}
-      />
-    </>
+    <ReactQuill
+      modules={modules}
+      value={data}
+      onChange={onChange}
+      theme="snow"
+    />
   );
 }
