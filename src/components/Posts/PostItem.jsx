@@ -9,7 +9,9 @@ export default function PostItem({ post, onDelete }) {
   const [isBrowse, setIsBrowse] = useState(post?.is_Browse);
   const handleBrowse = async (status) => {
     try {
-      await axios.put(`https://localhost:7224/api/Posts/Browse?id=${post?.id}`);
+      await axios.put(
+        `https://motel.azurewebsites.net/api/Posts/Browse?id=${post?.id}`
+      );
       setIsBrowse(status);
       setIsOpenBrowse(false);
     } catch (error) {
@@ -45,6 +47,7 @@ export default function PostItem({ post, onDelete }) {
           </div>
         </td>
         <td class="p-4 text-sm min-w-[200px]">{post?.title}</td>
+        <td class="p-4 text-sm min-w-[200px]">{post?.slug}</td>
         <td class="p-4 text-sm">
           <div className="text-sm line-clamp-4">{post?.description}</div>
         </td>
@@ -163,6 +166,7 @@ export default function PostItem({ post, onDelete }) {
                     class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                     placeholder=""
                     readOnly
+                    value={post?.user?.fullName}
                   />
                 </label>
               </div>
@@ -173,11 +177,22 @@ export default function PostItem({ post, onDelete }) {
                     class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                     placeholder=""
                     readOnly
+                    value={post?.user?.phoneNumber}
                   />
                 </label>
               </div>
             </div>
-
+            <div className="">
+              <label class="block text-sm mb-2">
+                <span class="text-gray-700 dark:text-gray-400">Slug</span>
+                <input
+                  class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                  placeholder=""
+                  readOnly
+                  value={post?.slug}
+                />
+              </label>
+            </div>
             <label class="block text-sm mb-2">
               <span class="text-gray-700 dark:text-gray-400">Description</span>
               <TinyEditor readOnly data={post?.description} />

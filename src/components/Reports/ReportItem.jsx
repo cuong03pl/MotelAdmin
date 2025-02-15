@@ -18,7 +18,7 @@ export default function ReportItem({ report, onDelete }) {
   const handleBrowse = async (status) => {
     try {
       await axios.put(
-        `https://localhost:7224/api/Reports/Browse?id=${report?.id}`
+        `https://motel.azurewebsites.net/api/Reports/Browse?id=${report?.id}`
       );
       setIsBrowse(status);
       setIsOpenBrowse(false);

@@ -15,7 +15,7 @@ export default function ReviewManagePage() {
   useEffect(() => {
     const fetchAPI = () => {
       axios
-        .get("https://localhost:7224/api/Reviews", {
+        .get("https://motel.azurewebsites.net/api/Reviews", {
           params: {
             page: page,
             pageSize: pagination.pageSize,
@@ -32,7 +32,7 @@ export default function ReviewManagePage() {
 
   const handleDelete = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://localhost:7224/api/Reviews/${id}`);
+      await axios.delete(`https://motel.azurewebsites.net/api/Reviews/${id}`);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {

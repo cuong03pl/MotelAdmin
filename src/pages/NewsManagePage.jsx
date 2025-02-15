@@ -18,7 +18,7 @@ export default function NewsManagePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
-        .get("https://localhost:7224/api/News", {
+        .get("https://motel.azurewebsites.net/api/News", {
           params: {
             page: page,
             pageSize: pagination.pageSize,
@@ -42,7 +42,7 @@ export default function NewsManagePage() {
   }, [searchParams]);
   const handleDeleteNews = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://localhost:7224/api/News/${id}`);
+      await axios.delete(`https://motel.azurewebsites.net/api/News/${id}`);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {
@@ -52,7 +52,7 @@ export default function NewsManagePage() {
   const handleUpdateNews = async (id, data, handleOpenModal) => {
     data.id = id;
     try {
-      await axios.put(`https://localhost:7224/api/News/${id}`, data, {
+      await axios.put(`https://motel.azurewebsites.net/api/News/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -67,7 +67,7 @@ export default function NewsManagePage() {
   const handleCreate = async () => {
     try {
       await axios.post(
-        `https://localhost:7224/api/News/`,
+        `https://motel.azurewebsites.net/api/News/`,
         { title, description },
         {
           headers: {
@@ -104,6 +104,7 @@ export default function NewsManagePage() {
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
               <th class="p-4">Title</th>
               <th class="p-4">Description</th>
+              <th class="p-4">Slug</th>
               <th class="p-4">Create At</th>
               <th class="p-4">Update At</th>
               <th class="p-4">Actions</th>

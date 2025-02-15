@@ -15,7 +15,7 @@ export default function ReportManagePage() {
   useEffect(() => {
     const fetchAPI = () => {
       axios
-        .get("https://localhost:7224/api/Reports", {
+        .get("https://motel.azurewebsites.net/api/Reports", {
           params: {
             page: page,
             pageSize: pagination.pageSize,
@@ -31,7 +31,7 @@ export default function ReportManagePage() {
   }, [isReload, page]);
   const handleDelete = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://localhost:7224/api/Reports/${id}`);
+      await axios.delete(`https://motel.azurewebsites.net/api/Reports/${id}`);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {

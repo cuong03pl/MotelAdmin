@@ -22,7 +22,9 @@ export default function CategoryItem({ category, onDelete, onUpdate }) {
         <td class="p-4 text-sm">
           <div className="text-sm line-clamp-4">{category?.name}</div>
         </td>
-
+        <td class="p-4 text-sm">
+          <div className="text-sm line-clamp-4">{category?.slug}</div>
+        </td>
         <td class="px-2">
           <div class="flex items-center text-sm">
             <button

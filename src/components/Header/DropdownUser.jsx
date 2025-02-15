@@ -17,7 +17,7 @@ const DropdownUser = () => {
       const user_data = jwtDecode(token);
 
       await axios
-        .get(`https://localhost:7224/api/Users/${user_data?.sub}`)
+        .get(`https://motel.azurewebsites.net/api/Users/${user_data?.sub}`)
         .then((res) => {
           setUser(res.data);
         });
@@ -41,7 +41,7 @@ const DropdownUser = () => {
           <span className="block text-xs"> {user?.email}</span>
         </span>
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          <img src={user?.avatar} alt="User" />
         </span>
         <svg
           className="hidden fill-current sm:block"

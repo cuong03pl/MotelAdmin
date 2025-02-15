@@ -16,7 +16,7 @@ export default function PostManagePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
-        .get("https://localhost:7224/api/Posts", {
+        .get("https://motel.azurewebsites.net/api/Posts", {
           params: {
             page: page,
             pageSize: pagination.pageSize,
@@ -40,7 +40,7 @@ export default function PostManagePage() {
   }, [searchParams]);
   const handleDeletePost = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://localhost:7224/api/Posts/${id}`);
+      await axios.delete(`https://motel.azurewebsites.net/api/Posts/${id}`);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {
@@ -59,6 +59,7 @@ export default function PostManagePage() {
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
               <th class="p-4">Owner</th>
               <th class="p-4">Title</th>
+              <th class="p-4">Slug</th>
               <th class="p-4">Description</th>
               <th class="p-4">Price</th>
               <th class="p-4">Location</th>

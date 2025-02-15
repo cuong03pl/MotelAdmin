@@ -13,7 +13,7 @@ export default function CategoryManagePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       await axios
-        .get("https://localhost:7224/api/Categories")
+        .get("https://motel.azurewebsites.net/api/Categories")
         .then((res) => {
           setCategories(res.data);
         })
@@ -23,7 +23,9 @@ export default function CategoryManagePage() {
   }, [isReload]);
   const handleDeleteCategory = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://localhost:7224/api/Categories/${id}`);
+      await axios.delete(
+        `https://motel.azurewebsites.net/api/Categories/${id}`
+      );
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {
@@ -33,11 +35,15 @@ export default function CategoryManagePage() {
   const handleUpdateCategory = async (id, data, handleOpenModal) => {
     data.id = id;
     try {
-      await axios.put(`https://localhost:7224/api/Categories/${id}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await axios.put(
+        `https://motel.azurewebsites.net/api/Categories/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       setIsReload(isReload ? false : true);
       handleOpenModal();
@@ -48,7 +54,7 @@ export default function CategoryManagePage() {
   const handleCreate = async () => {
     try {
       await axios.post(
-        `https://localhost:7224/api/Categories/`,
+        `https://motel.azurewebsites.net/api/Categories/`,
         { name },
         {
           headers: {
@@ -83,6 +89,7 @@ export default function CategoryManagePage() {
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
               <th class="p-4">Title</th>
+              <th class="p-4">Slug</th>
               <th class="p-4">Actions</th>
             </tr>
           </thead>

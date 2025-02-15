@@ -15,7 +15,7 @@ export default function UserItem({ user, onDelete }) {
   const handleBlock = async (status) => {
     try {
       await axios.put(
-        `https://localhost:7224/api/Users/block?id=${user?.id}&is_block=${status}`
+        `https://motel.azurewebsites.net/api/Users/block?id=${user?.id}&is_block=${status}`
       );
       setIsBlock(status);
       setIsOpenBlock(false);

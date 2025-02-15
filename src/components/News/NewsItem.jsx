@@ -29,6 +29,9 @@ export default function NewsItem({ news, onDelete, onUpdate }) {
           <div className="text-sm line-clamp-4">{news?.description}</div>
         </td>
         <td class="p-4 text-sm">
+          <div className="text-sm line-clamp-4">{news?.slug}</div>
+        </td>
+        <td class="p-4 text-sm">
           <div className="text-sm line-clamp-4">{news?.createAt}</div>
         </td>
         <td class="p-4 text-sm">
