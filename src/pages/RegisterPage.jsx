@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { Register } from "../services/fetchAPI";
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -72,15 +73,15 @@ export default function RegisterPage() {
       position: "bottom-right",
       pauseOnHover: false,
     });
+  // Xử lý đăng kí
   const handleRegister = async () => {
     if (password === confirmPassword) {
-      await axios
-        .post("https://motel.azurewebsites.net/api/Auth/register", {
-          fullname,
-          password,
-          phoneNumber: phone,
-          email,
-        })
+      await Register({
+        fullname,
+        password,
+        phoneNumber: phone,
+        email,
+      })
         .then((res) => {
           successNotify(res.data?.message);
           setTimeout(() => {

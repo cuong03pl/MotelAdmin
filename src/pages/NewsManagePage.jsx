@@ -4,6 +4,7 @@ import axios from "axios";
 import pagination from "../config/pagination";
 import { useSearchParams } from "react-router-dom";
 import TinyEditor from "../components/Editor/Editor";
+import { CreateNews, DeleteNews, GetNews } from "../services/fetchAPI";
 
 export default function NewsManagePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,15 +16,15 @@ export default function NewsManagePage() {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  // Lấy ra các tin tức
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get("https://motel.azurewebsites.net/api/News", {
-          params: {
-            page: page,
-            pageSize: pagination.pageSize,
-          },
-        })
+      await GetNews({
+        params: {
+          page: page,
+          pageSize: pagination.pageSize,
+        },
+      })
         .then((res) => {
           setTotalPage(res?.data?.totalPages);
           setNews(res?.data);
@@ -40,41 +41,31 @@ export default function NewsManagePage() {
       setPage(pageParam);
     }
   }, [searchParams]);
+  // Xử lý xóa tin tức
   const handleDeleteNews = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://motel.azurewebsites.net/api/News/${id}`);
+      await DeleteNews(id);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {
       console.error("Error updating post:", error);
     }
   };
+  // Xử lý cập nhật tin tức
   const handleUpdateNews = async (id, data, handleOpenModal) => {
     data.id = id;
     try {
-      await axios.put(`https://motel.azurewebsites.net/api/News/${id}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await axios.put(id, data);
       handleOpenModal();
       setIsReload(isReload ? false : true);
     } catch (error) {
       console.error("Error updating post:", error);
     }
   };
-
+  // Tạo mới tin tức
   const handleCreate = async () => {
     try {
-      await axios.post(
-        `https://motel.azurewebsites.net/api/News/`,
-        { title, description },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await CreateNews({ title, description });
       setTitle("");
       setDescription("");
       setIsReload(isReload ? false : true);

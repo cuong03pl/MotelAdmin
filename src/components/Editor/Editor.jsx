@@ -14,6 +14,7 @@ const modules = {
     ["clean"],
   ],
 };
+// Trình soạn thảo
 export default function TinyEditor({ data, onChange }) {
   return (
     <ReactQuill

@@ -4,6 +4,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { useSearchParams } from "react-router-dom";
 import pagination from "../config/pagination";
+import { DeleteReview, GetReviews } from "../services/fetchAPI";
 
 export default function ReviewManagePage() {
   const [reviews, setReviews] = useState([]);
@@ -14,14 +15,15 @@ export default function ReviewManagePage() {
   const [totalPages, setTotalPage] = useState(1);
   useEffect(() => {
     const fetchAPI = () => {
-      axios
-        .get("https://motel.azurewebsites.net/api/Reviews", {
-          params: {
-            page: page,
-            pageSize: pagination.pageSize,
-          },
-        })
+      GetReviews({
+        params: {
+          page: page,
+          pageSize: pagination.pageSize,
+        },
+      })
         .then((res) => {
+          console.log(res);
+
           setReviews(res.data.data);
           setTotalPage(res?.data?.totalPages);
         })
@@ -32,7 +34,7 @@ export default function ReviewManagePage() {
 
   const handleDelete = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://motel.azurewebsites.net/api/Reviews/${id}`);
+      await DeleteReview(id);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {

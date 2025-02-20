@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { Login } from "../services/fetchAPI";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,20 +45,19 @@ export default function LoginPage() {
       position: "bottom-right",
       pauseOnHover: false,
     });
+  // Xử lý đăng nhập
   const handleLogin = async () => {
-    await axios
-      .post("https://motel.azurewebsites.net/api/Auth/login", {
-        email,
-        password,
-      })
-      .then((res) => {
-        if (res.data) {
-          dispatch(setUser(res.data));
-          window.location.href = "/";
-        } else {
-          notifyInvalid();
-        }
-      });
+    await Login({
+      email,
+      password,
+    }).then((res) => {
+      if (res.data) {
+        dispatch(setUser(res.data));
+        window.location.href = "/";
+      } else {
+        notifyInvalid();
+      }
+    });
   };
 
   return (

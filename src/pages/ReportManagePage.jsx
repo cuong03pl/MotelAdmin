@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import pagination from "../config/pagination";
 import ReactPaginate from "react-paginate";
+import { DeleteReport, GetReports } from "../services/fetchAPI";
 
 export default function ReportManagePage() {
   const [reports, setReports] = useState([]);
@@ -12,15 +13,15 @@ export default function ReportManagePage() {
   const initialPage = Number(searchParams.get("page")) || 1;
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
+  // Xử lý xóa report
   useEffect(() => {
-    const fetchAPI = () => {
-      axios
-        .get("https://motel.azurewebsites.net/api/Reports", {
-          params: {
-            page: page,
-            pageSize: pagination.pageSize,
-          },
-        })
+    const fetchAPI = async () => {
+      await GetReports({
+        params: {
+          page: page,
+          pageSize: pagination.pageSize,
+        },
+      })
         .then((res) => {
           setReports(res.data.data);
           setTotalPage(res?.data?.totalPages);
@@ -29,9 +30,10 @@ export default function ReportManagePage() {
     };
     fetchAPI();
   }, [isReload, page]);
+  // Xử lý xóa report
   const handleDelete = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://motel.azurewebsites.net/api/Reports/${id}`);
+      await DeleteReport(id);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {

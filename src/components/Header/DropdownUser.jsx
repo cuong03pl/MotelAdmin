@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/user/userSlice";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import { GetUserByToken } from "../../services/fetchAPI";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -16,11 +17,9 @@ const DropdownUser = () => {
     const fetchAPI = async () => {
       const user_data = jwtDecode(token);
 
-      await axios
-        .get(`https://motel.azurewebsites.net/api/Users/${user_data?.sub}`)
-        .then((res) => {
-          setUser(res.data);
-        });
+      await GetUserByToken(user_data?.sub).then((res) => {
+        setUser(res.data);
+      });
     };
     if (token) {
       fetchAPI();

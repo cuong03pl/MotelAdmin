@@ -4,6 +4,7 @@ import Users from "../components/Users/Users";
 import { useSearchParams } from "react-router-dom";
 import pagination from "../config/pagination";
 import ReactPaginate from "react-paginate";
+import { DeleteUser, GetUsers } from "../services/fetchAPI";
 
 export default function UserManagePage() {
   const [users, setUsers] = useState([]);
@@ -14,13 +15,12 @@ export default function UserManagePage() {
   const [totalPages, setTotalPage] = useState(1);
   useEffect(() => {
     const fetchAPI = () => {
-      axios
-        .get("https://motel.azurewebsites.net/api/Users", {
-          params: {
-            page: page,
-            pageSize: pagination.pageSize,
-          },
-        })
+      GetUsers({
+        params: {
+          page: page,
+          pageSize: pagination.pageSize,
+        },
+      })
         .then((res) => {
           setUsers(res.data.data);
           setTotalPage(res?.data?.totalPages);
@@ -31,7 +31,7 @@ export default function UserManagePage() {
   }, [isReload, page]);
   const handleDelete = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://motel.azurewebsites.net/api/Users/${id}`);
+      await DeleteUser(id);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {

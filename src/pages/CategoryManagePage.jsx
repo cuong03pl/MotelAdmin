@@ -1,8 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import pagination from "../config/pagination";
 import { useSearchParams } from "react-router-dom";
 import Categories from "../components/Categories/Categories";
+import {
+  CreateCategory,
+  DeleteCategory,
+  GetCategories,
+  UpdateCategory,
+} from "../services/fetchAPI";
 
 export default function CategoryManagePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -10,10 +15,10 @@ export default function CategoryManagePage() {
   const [isReload, setIsReload] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
+  // Lấy ra các category
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get("https://motel.azurewebsites.net/api/Categories")
+      await GetCategories()
         .then((res) => {
           setCategories(res.data);
         })
@@ -21,47 +26,34 @@ export default function CategoryManagePage() {
     };
     fetchAPI();
   }, [isReload]);
+  // Xử lý xóa
   const handleDeleteCategory = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(
-        `https://motel.azurewebsites.net/api/Categories/${id}`
-      );
+      await DeleteCategory(id);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {
       console.error("Error updating post:", error);
     }
   };
+  // Xử lý update
   const handleUpdateCategory = async (id, data, handleOpenModal) => {
     data.id = id;
     try {
-      await axios.put(
-        `https://motel.azurewebsites.net/api/Categories/${id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await UpdateCategory(id, data);
 
       setIsReload(isReload ? false : true);
       handleOpenModal();
+      console.log("okkk");
     } catch (error) {
       console.error("Error updating category:", error);
     }
   };
+
+  // XỬ lý tạo
   const handleCreate = async () => {
     try {
-      await axios.post(
-        `https://motel.azurewebsites.net/api/Categories/`,
-        { name },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await CreateCategory({ name });
       setName("");
       setIsReload(isReload ? false : true);
       handleOpenModal();

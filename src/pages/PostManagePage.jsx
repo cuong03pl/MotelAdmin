@@ -4,6 +4,7 @@ import Posts from "../components/Posts/Posts";
 import { useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import pagination from "../config/pagination";
+import { DeletePost, GetPosts } from "../services/fetchAPI";
 
 export default function PostManagePage() {
   const [posts, setPosts] = useState([]);
@@ -13,15 +14,15 @@ export default function PostManagePage() {
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
 
+  // Lấy ra các post
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get("https://motel.azurewebsites.net/api/Posts", {
-          params: {
-            page: page,
-            pageSize: pagination.pageSize,
-          },
-        })
+      await GetPosts({
+        params: {
+          page: page,
+          pageSize: pagination.pageSize,
+        },
+      })
         .then((res) => {
           setTotalPage(res?.data?.totalPages);
           setPosts(res?.data?.data);
@@ -38,9 +39,10 @@ export default function PostManagePage() {
       setPage(pageParam);
     }
   }, [searchParams]);
+  // Xóa bài viết
   const handleDeletePost = async (id, handleOpenModalDelete) => {
     try {
-      await axios.delete(`https://motel.azurewebsites.net/api/Posts/${id}`);
+      await DeletePost(id);
       setIsReload(isReload ? false : true);
       handleOpenModalDelete();
     } catch (error) {

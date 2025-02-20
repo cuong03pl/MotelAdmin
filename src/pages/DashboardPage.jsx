@@ -3,6 +3,12 @@ import CardDataStats from "../components/CardDataStats";
 import axios from "axios";
 import { PostIcon, ReportIcon, UserIcon } from "../components/Icon/Icon";
 import { Chart } from "../components/Chart/Chart";
+import {
+  GetCountPost,
+  GetCountReport,
+  GetCountUser,
+  GetPostCountsByMonth,
+} from "../services/fetchAPI";
 
 export default function DashboardPage() {
   const [statsData, setStatsData] = useState([]);
@@ -12,9 +18,9 @@ export default function DashboardPage() {
     const fetchAPI = async () => {
       try {
         const [postsRes, usersRes, reportsRes] = await Promise.all([
-          axios.get("https://motel.azurewebsites.net/api/Posts/GetCount"),
-          axios.get("https://motel.azurewebsites.net/api/Users/GetCount"),
-          axios.get("https://motel.azurewebsites.net/api/Reports/GetCount"),
+          GetCountPost(),
+          GetCountUser(),
+          GetCountReport(),
         ]);
 
         setStatsData([
@@ -44,10 +50,8 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchAPI = async () => {
-      await axios
-        .get("https://motel.azurewebsites.net/api/Users/GetPostCountsByMonth")
+      await GetPostCountsByMonth()
         .then((res) => {
-          console.log(res);
           setMonthCount(res?.data);
         })
         .catch((err) => console.log(err));

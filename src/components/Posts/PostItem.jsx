@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TinyEditor from "../Editor/Editor";
+import { BrowsePost } from "../../services/fetchAPI";
 
 export default function PostItem({ post, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenBrowse, setIsOpenBrowse] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isBrowse, setIsBrowse] = useState(post?.is_Browse);
+  // Xử lý duyệt bài viết
   const handleBrowse = async (status) => {
     try {
-      await axios.put(
-        `https://motel.azurewebsites.net/api/Posts/Browse?id=${post?.id}`
-      );
+      await BrowsePost(post?.id);
       setIsBrowse(status);
       setIsOpenBrowse(false);
     } catch (error) {

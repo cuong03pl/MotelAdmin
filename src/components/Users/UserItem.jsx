@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BlockUser } from "../../services/fetchAPI";
 
 export default function UserItem({ user, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,9 +15,7 @@ export default function UserItem({ user, onDelete }) {
   };
   const handleBlock = async (status) => {
     try {
-      await axios.put(
-        `https://motel.azurewebsites.net/api/Users/block?id=${user?.id}&is_block=${status}`
-      );
+      await BlockUser(user?.id, status);
       setIsBlock(status);
       setIsOpenBlock(false);
     } catch (error) {

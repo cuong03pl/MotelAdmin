@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BrowseReport } from "../../services/fetchAPI";
 
 export default function ReportItem({ report, onDelete }) {
   const [isBrowse, setIsBrowse] = useState(report?.status);
@@ -15,11 +16,10 @@ export default function ReportItem({ report, onDelete }) {
   const handleOpenModalDelete = () => {
     setIsOpenDelete(isOpenDelete ? false : true);
   };
+  // Xử lý duyệt báo cáo
   const handleBrowse = async (status) => {
     try {
-      await axios.put(
-        `https://motel.azurewebsites.net/api/Reports/Browse?id=${report?.id}`
-      );
+      await BrowseReport(report?.id);
       setIsBrowse(status);
       setIsOpenBrowse(false);
     } catch (error) {
