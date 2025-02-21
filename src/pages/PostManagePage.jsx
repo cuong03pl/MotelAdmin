@@ -54,21 +54,21 @@ export default function PostManagePage() {
   };
   return (
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-      <div class="text-[24px] font-semibold">Post Manage</div>
+      <div class="text-[24px] font-semibold">Quản lý bài viết</div>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th class="p-4">Owner</th>
-              <th class="p-4">Title</th>
+              <th class="p-4">Người đăng</th>
+              <th class="p-4">Tiêu đề</th>
               <th class="p-4">Slug</th>
-              <th class="p-4">Description</th>
-              <th class="p-4">Price</th>
-              <th class="p-4">Location</th>
-              <th class="p-4">Area</th>
-              <th class="p-4">Available</th>
-              <th class="p-4">Browser</th>
-              <th class="p-4">Actions</th>
+              <th class="p-4">Mo tả</th>
+              <th class="p-4">Giá</th>
+              <th class="p-4">Địa chỉ</th>
+              <th class="p-4">Diện tích</th>
+              <th class="p-4">Trạng thái</th>
+              <th class="p-4">Duyệt</th>
+              <th class="p-4"></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">

@@ -69,7 +69,7 @@ export default function CategoryItem({ category, onDelete, onUpdate }) {
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px] max-h-[500px] overflow-y-scroll">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-[24px] font-semibold">Detail</div>
+              <div className="text-[24px] font-semibold">Chi tiết</div>
               <div className="">
                 <button
                   onClick={handleOpenModal}
@@ -92,7 +92,7 @@ export default function CategoryItem({ category, onDelete, onUpdate }) {
             </div>
             <div className="">
               <label class="block text-sm mb-2">
-                <span class="text-gray-700 dark:text-gray-400">Title</span>
+                <span class="text-gray-700 dark:text-gray-400">Tiêu đề</span>
                 <input
                   class="block w-full mt-1 text-sm outline-none border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700  dark:text-gray-300 "
                   placeholder=""
@@ -107,7 +107,7 @@ export default function CategoryItem({ category, onDelete, onUpdate }) {
                 type="button"
                 class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               >
-                Update
+                Lưu
               </button>
             </div>
           </div>
@@ -118,9 +118,12 @@ export default function CategoryItem({ category, onDelete, onUpdate }) {
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-[24px] font-semibold">Delete</div>
+              <div className="text-[24px] font-semibold">Xóa</div>
               <div className="">
-                <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray">
+                <button
+                  onClick={handleOpenModalDelete}
+                  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -136,13 +139,15 @@ export default function CategoryItem({ category, onDelete, onUpdate }) {
                 </button>
               </div>
             </div>
-            <div className="">Are you sure you want to delete this news?</div>
+            <div className="">
+              Bạn có chắc chắn muốn xóa danh mục này không?
+            </div>
             <div className="flex justify-end">
               <button
                 onClick={() => handleDeleteCategory(category?.id)}
                 className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
               >
-                Delete
+                Xóa
               </button>
             </div>
           </div>

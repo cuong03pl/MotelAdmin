@@ -51,17 +51,17 @@ export default function UserManagePage() {
   };
   return (
     <div className="w-full overflow-hidden rounded-lg shadow-xs">
-      <div className="text-[24px] font-semibold">User Manage</div>
+      <div className="text-[24px] font-semibold">Quản lý người dùng</div>
       <div className="w-full overflow-x-auto">
         <table className="w-full whitespace-no-wrap">
           <thead>
             <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th className="p-4">Full Name</th>
-              <th className="p-4">User Name</th>
+              <th className="p-4">Họ và tên</th>
+              <th className="p-4">Username</th>
               <th className="p-4">Email</th>
-              <th className="p-4">Phone</th>
-              <th className="p-4">Block</th>
-              <th className="p-4">Actions</th>
+              <th className="p-4">Số điện thoại</th>
+              <th className="p-4">Chặn</th>
+              <th className="p-4"></th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">

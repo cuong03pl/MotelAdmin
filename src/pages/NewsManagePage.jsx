@@ -80,25 +80,25 @@ export default function NewsManagePage() {
   return (
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
       <div className="flex justify-between items-center">
-        <div class="text-[24px] font-semibold">News Manage</div>
+        <div class="text-[24px] font-semibold">Quản lý tin tức</div>
         <button
           type="button"
           onClick={handleOpenCreateModal}
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
-          Create
+          Tạo mới
         </button>
       </div>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th class="p-4">Title</th>
-              <th class="p-4">Description</th>
+              <th class="p-4">Tiêu đề</th>
+              <th class="p-4">Mô tả</th>
               <th class="p-4">Slug</th>
-              <th class="p-4">Create At</th>
-              <th class="p-4">Update At</th>
-              <th class="p-4">Actions</th>
+              <th class="p-4">Ngày tạo</th>
+              <th class="p-4">Ngày cập nhật</th>
+              <th class="p-4"></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -161,7 +161,7 @@ export default function NewsManagePage() {
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px] max-h-[500px] overflow-y-scroll">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-[24px] font-semibold">Detail</div>
+              <div className="text-[24px] font-semibold">Tạo mới</div>
               <div className="">
                 <button
                   onClick={handleOpenCreateModal}
@@ -184,7 +184,7 @@ export default function NewsManagePage() {
             </div>
             <div className="">
               <label class="block text-sm mb-2">
-                <span class="text-gray-700 dark:text-gray-400">Title</span>
+                <span class="text-gray-700 dark:text-gray-400">Tiêu đề</span>
                 <input
                   class="block w-full mt-1 text-sm outline-none border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700  dark:text-gray-300 "
                   placeholder=""
@@ -195,7 +195,7 @@ export default function NewsManagePage() {
             </div>
 
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Description</span>
+              <span class="text-gray-700 dark:text-gray-400">Mô tả</span>
               <TinyEditor data={description} onChange={setDescription} />
             </label>
             <div className="flex justify-end">
@@ -204,7 +204,7 @@ export default function NewsManagePage() {
                 type="button"
                 class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               >
-                Update
+                Lưu
               </button>
             </div>
           </div>

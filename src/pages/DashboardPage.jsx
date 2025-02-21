@@ -25,17 +25,17 @@ export default function DashboardPage() {
 
         setStatsData([
           {
-            title: "Total posts",
+            title: "Bài viết",
             count: postsRes?.data,
             icon: <PostIcon className="w-[22px] h-[16px] fill-primary" />,
           },
           {
-            title: "Total users",
+            title: "Người dùng",
             count: usersRes?.data,
             icon: <UserIcon className="w-[22px] h-[16px] fill-primary" />,
           },
           {
-            title: "Total reports",
+            title: "Báo cáo",
             count: reportsRes?.data,
             icon: <ReportIcon className="w-[22px] h-[16px] fill-primary" />,
           },

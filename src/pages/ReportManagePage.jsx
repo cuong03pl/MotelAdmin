@@ -54,17 +54,17 @@ export default function ReportManagePage() {
   };
   return (
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-      <div class="text-[24px] font-semibold">Report Manage</div>
+      <div class="text-[24px] font-semibold">Quản lý báo cáo</div>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th class="p-4">User Report</th>
-              <th class="p-4">Title</th>
-              <th class="p-4">Reason</th>
-              <th class="p-4">Note</th>
-              <th class="p-4">Status</th>
-              <th class="p-4">Actions</th>
+              <th class="p-4">Người báo cáo</th>
+              <th class="p-4">Tiêu đề </th>
+              <th class="p-4">Nguyên nhân </th>
+              <th class="p-4">Ghi chú</th>
+              <th class="p-4">Trạng thái </th>
+              <th class="p-4"></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">

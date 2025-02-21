@@ -109,7 +109,7 @@ export default function ReportItem({ report, onDelete }) {
         <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
           <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-[24px] font-semibold">Detail</div>
+              <div className="text-[24px] font-semibold">Chi tiết</div>
               <div className="">
                 <button
                   onClick={handleOpenModal}
@@ -132,7 +132,7 @@ export default function ReportItem({ report, onDelete }) {
             </div>
 
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Full Name</span>
+              <span class="text-gray-700 dark:text-gray-400">Họ và tên</span>
               <input
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
@@ -141,7 +141,7 @@ export default function ReportItem({ report, onDelete }) {
               />
             </label>
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Title</span>
+              <span class="text-gray-700 dark:text-gray-400">Tiêu đề</span>
               <input
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
@@ -150,7 +150,7 @@ export default function ReportItem({ report, onDelete }) {
               />
             </label>
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Reason</span>
+              <span class="text-gray-700 dark:text-gray-400">Nguyên nhân</span>
               <input
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 placeholder=""
@@ -160,7 +160,7 @@ export default function ReportItem({ report, onDelete }) {
             </label>
 
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Note</span>
+              <span class="text-gray-700 dark:text-gray-400">Ghi chú</span>
               <textarea
                 rows={5}
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
@@ -171,7 +171,9 @@ export default function ReportItem({ report, onDelete }) {
             </label>
             <div className="flex gap-6">
               <label class="flex items-center gap-4 text-sm  ">
-                <span class="text-gray-700 dark:text-gray-400">Status: </span>
+                <span class="text-gray-700 dark:text-gray-400">
+                  Trạng thái:{" "}
+                </span>
                 {isBrowse === 1 && (
                   <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                     True

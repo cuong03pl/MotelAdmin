@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import LogoIcon from "../../images/logo/logo-icon.svg";
 import DarkModeSwitcher from "./DarkModeSwitcher";
-import DropdownMessage from "./DropdownMessage";
-import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 export default function Header({ sidebarOpen, setSidebarOpen }) {
   return (
@@ -94,8 +92,6 @@ export default function Header({ sidebarOpen, setSidebarOpen }) {
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
             <DarkModeSwitcher />
-            <DropdownNotification />
-            <DropdownMessage />
           </ul>
           <DropdownUser />
         </div>
