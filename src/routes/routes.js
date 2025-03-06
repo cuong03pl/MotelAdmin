@@ -1,4 +1,5 @@
 import routes from "../config/routes";
+import BookingManagePage from "../pages/BookingManagePage";
 import CategoryManagePage from "../pages/CategoryManagePage";
 import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
@@ -49,5 +50,9 @@ export const publicRoutes = [
   {
     path: routes.category_manage,
     component: <CategoryManagePage />,
+  },
+  {
+    path: routes.booking,
+    component: <BookingManagePage />,
   },
 ];

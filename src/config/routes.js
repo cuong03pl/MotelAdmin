@@ -8,5 +8,6 @@ const routes = {
   review_manage: "/reviews",
   news_manage: "/news",
   category_manage: "/categories",
+  booking: "/booking",
 };
 export default routes;

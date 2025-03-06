@@ -71,6 +71,14 @@ export const GetPosts = async (params) => {
   const res = await get(`Posts`, params);
   return res;
 };
+export const GetBookings = async (params) => {
+  const res = await get(`Booking`, params);
+  return res;
+};
+export const GetBookingById = async (id) => {
+  const res = await get(`Booking/${id}`);
+  return res;
+};
 export const GetNewsById = async (id) => {
   const res = await get(`News/${id}`);
   return res;
