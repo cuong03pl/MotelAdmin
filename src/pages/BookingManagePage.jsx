@@ -4,7 +4,7 @@ import Users from "../components/Users/Users";
 import { useSearchParams } from "react-router-dom";
 import pagination from "../config/pagination";
 import ReactPaginate from "react-paginate";
-import { DeleteUser, GetBookings } from "../services/fetchAPI";
+import { DeleteUser, ExportBooking, GetBookings } from "../services/fetchAPI";
 import Booking from "../components/Booking/Booking";
 
 export default function BookingManagePage() {
@@ -15,8 +15,8 @@ export default function BookingManagePage() {
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
   useEffect(() => {
-    const fetchAPI = () => {
-      GetBookings({
+    const fetchAPI = async () => {
+      await GetBookings({
         params: {
           page: page,
           pageSize: pagination.pageSize,
@@ -43,9 +43,37 @@ export default function BookingManagePage() {
   const handlePageClick = (event) => {
     setSearchParams({ page: event.selected + 1 });
   };
+  const handleExportReport = async () => {
+    await ExportBooking()
+      .then((res) => {
+        const blob = new Blob([res.data], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, "");
+        const fileName = `booking_${timestamp}.pdf`;
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="w-full overflow-hidden rounded-lg shadow-xs">
-      <div className="text-[24px] font-semibold">Quản lý cọc phòng</div>
+      <div className="flex items-center justify-between">
+        <div className="text-[24px] font-semibold">Quản lý cọc phòng</div>
+        <button
+          onClick={handleExportReport}
+          type="button"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          Xuất báo cáo
+        </button>
+      </div>
       <div className="w-full overflow-x-auto">
         <table className="w-full whitespace-no-wrap">
           <thead>

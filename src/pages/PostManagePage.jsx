@@ -62,7 +62,7 @@ export default function PostManagePage() {
               <th class="p-4">Người đăng</th>
               <th class="p-4">Tiêu đề</th>
               <th class="p-4">Slug</th>
-              <th class="p-4">Mo tả</th>
+              <th class="p-4">Mô tả</th>
               <th class="p-4">Giá</th>
               <th class="p-4">Địa chỉ</th>
               <th class="p-4">Diện tích</th>

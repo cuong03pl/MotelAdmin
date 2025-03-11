@@ -205,7 +205,6 @@ export default function LoginPage() {
                   <div className="relative">
                     <input
                       {...register("email")}
-                      autoComplete
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
                       placeholder="Nhập email"
@@ -242,7 +241,6 @@ export default function LoginPage() {
                   </label>
                   <div className="relative">
                     <input
-                      autoComplete
                       {...register("password")}
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}

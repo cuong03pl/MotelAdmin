@@ -228,3 +228,13 @@ export const BrowseReport = async (id) => {
   const res = await put(`Reports/Browse?id=${id}`);
   return res;
 };
+
+export const ExportReport = async (params) => {
+  const res = await get(`Reports/export-pdf`, params);
+  return res;
+};
+
+export const ExportBooking = async () => {
+  const res = await get(`Booking/export-pdf`);
+  return res;
+};
