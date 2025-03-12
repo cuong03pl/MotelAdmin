@@ -2,6 +2,7 @@ import routes from "../config/routes";
 import BookingManagePage from "../pages/BookingManagePage";
 import CategoryManagePage from "../pages/CategoryManagePage";
 import DashboardPage from "../pages/DashboardPage";
+import LoginHistoryPage from "../pages/LoginHistoryPage";
 import LoginPage from "../pages/LoginPage";
 import NewsManagePage from "../pages/NewsManagePage";
 import PostManagePage from "../pages/PostManagePage";
@@ -54,5 +55,9 @@ export const publicRoutes = [
   {
     path: routes.booking,
     component: <BookingManagePage />,
+  },
+  {
+    path: routes.login_history,
+    component: <LoginHistoryPage />,
   },
 ];

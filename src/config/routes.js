@@ -9,5 +9,6 @@ const routes = {
   news_manage: "/news",
   category_manage: "/categories",
   booking: "/booking",
+  login_history: "/login-history",
 };
 export default routes;

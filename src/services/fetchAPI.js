@@ -9,7 +9,10 @@ export const GetCategories = async () => {
   const res = await get(`Categories`);
   return res;
 };
-
+export const GetLoginHistories = async (params) => {
+  const res = await get(`Auth/GetLoginHistory`, params);
+  return res;
+};
 export const GetUsers = async (params) => {
   const res = await get(`Users`, params);
   return res;
