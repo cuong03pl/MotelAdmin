@@ -10,5 +10,6 @@ const routes = {
   category_manage: "/categories",
   booking: "/booking",
   login_history: "/login-history",
+  role_manage: "/role",
 };
 export default routes;

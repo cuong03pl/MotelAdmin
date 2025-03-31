@@ -7,8 +7,20 @@ export default function UserItem({ user, onDelete }) {
   const [isOpenBlock, setIsOpenBlock] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isBlock, setIsBlock] = useState(user?.isBlock);
-  const handleOpenModal = () => {
-    setIsOpen(isOpen ? false : true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const handleOpenModal = async () => {
+    try {
+      const response = await axios.get(
+        `https://localhost:7224/api/Users/${user.id}`
+      );
+      const userData = response.data;
+      setIsAdmin(
+        userData.roles.includes("d2fd87b7-f1f8-4f61-8a7f-d120beabefb3")
+      );
+      setIsOpen(isOpen ? false : true);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
   const handleOpenModalBlock = () => {
     setIsOpenBlock(isOpenBlock ? false : true);
@@ -27,6 +39,17 @@ export default function UserItem({ user, onDelete }) {
   };
   const handleDelete = async (id) => {
     onDelete(id, handleOpenModalDelete);
+  };
+  const handleSave = async (id) => {
+    try {
+      const roleId = isAdmin ? "d2fd87b7-f1f8-4f61-8a7f-d120beabefb3" : "";
+      await axios.put(`https://localhost:7224/api/Auth/SetRole/${id}`, {
+        roleId: roleId,
+      });
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error updating user role:", error);
+    }
   };
   useEffect(() => {
     setIsBlock(user?.isBlock);
@@ -160,6 +183,23 @@ export default function UserItem({ user, onDelete }) {
                 value={user?.email}
               />
             </label>
+            <label class="block text-sm mb-2">
+              <span class="text-gray-700 dark:text-gray-400">Admin:</span>
+              <input
+                type="checkbox"
+                class="mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+              />
+            </label>
+            <div className="flex justify-end">
+              <button
+                className="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                onClick={() => handleSave(user?.id)}
+              >
+                Save
+              </button>
+            </div>
             <div className="flex gap-6">
               <label class="flex items-center gap-4 text-sm  ">
                 <span class="text-gray-700 dark:text-gray-400">Chặn: </span>

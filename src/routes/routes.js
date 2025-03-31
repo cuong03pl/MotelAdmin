@@ -10,6 +10,7 @@ import RegisterPage from "../pages/RegisterPage";
 import ReportManagePage from "../pages/ReportManagePage";
 import ReviewManagePage from "../pages/ReviewManagePage";
 import UserManagePage from "../pages/UserManagePage";
+import RoleManagePage from "../pages/RoleManagePage";
 
 export const publicRoutes = [
   {
@@ -59,5 +60,9 @@ export const publicRoutes = [
   {
     path: routes.login_history,
     component: <LoginHistoryPage />,
+  },
+  {
+    path: routes.role_manage,
+    component: <RoleManagePage />,
   },
 ];

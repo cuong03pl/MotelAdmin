@@ -135,6 +135,14 @@ export const CreateNews = async (params) => {
   });
   return res;
 };
+export const CreateRole = async (params) => {
+  const res = await post(`Auth/CreateRole`, params, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res;
+};
 export const CreateComment = async (params) => {
   const res = await post(`Reviews`, params);
   return res;
@@ -177,6 +185,14 @@ export const UpdateCategory = async (id, params) => {
   });
   return res;
 };
+export const UpdateRole = async (id, params) => {
+  const res = await put(`Auth/UpdateRole/${id}`, params, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res;
+};
 // delete
 export const DeletePost = async (id, params) => {
   const res = await deleteMethod(`Posts/${id}`, params, {
@@ -204,6 +220,10 @@ export const DeleteUser = async (id) => {
 
 export const DeleteReview = async (id) => {
   const res = await deleteMethod(`Reviews/${id}`);
+  return res;
+};
+export const DeleteRole = async (id) => {
+  const res = await deleteMethod(`Auth/DeleteRole/${id}`);
   return res;
 };
 // login
