@@ -4,7 +4,7 @@ import Users from "../components/Users/Users";
 import { useSearchParams } from "react-router-dom";
 import pagination from "../config/pagination";
 import ReactPaginate from "react-paginate";
-import { DeleteUser, GetUsers } from "../services/fetchAPI";
+import { DeleteUser, GetUsers, SetRole } from "../services/fetchAPI";
 
 export default function UserManagePage() {
   const [users, setUsers] = useState([]);
@@ -38,6 +38,20 @@ export default function UserManagePage() {
       console.error("Error updating post:", error);
     }
   };
+
+  const handleSetRole = async (id, role, handleOpenModal) => {
+    try {
+      const formData = new FormData();
+      if (role) {
+        formData.append("roles", role);
+      }
+      await SetRole(id, formData);
+      setIsReload(isReload ? false : true);
+      handleOpenModal();
+    } catch (error) {
+      console.error("Error updating user role:", error);
+    }
+  };
   useEffect(() => {
     const pageParam = Number(searchParams.get("page")) || 1;
     setSearchParams({ page: Number(pageParam) });
@@ -65,7 +79,11 @@ export default function UserManagePage() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-            <Users onDelete={handleDelete} users={users} />
+            <Users
+              onDelete={handleDelete}
+              users={users}
+              onSetRole={handleSetRole}
+            />
           </tbody>
         </table>
       </div>

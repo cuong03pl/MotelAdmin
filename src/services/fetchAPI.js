@@ -115,6 +115,10 @@ export const GetLocations = async () => {
   const res = await get(`Posts/GetLocations`);
   return res;
 };
+export const GetRoles = async () => {
+  const res = await get(`Auth/GetRoles`);
+  return res;
+};
 // post
 
 export const AddFavoritePost = async (params) => {
@@ -153,6 +157,10 @@ export const CreateCategory = async (params) => {
       "Content-Type": "application/json",
     },
   });
+  return res;
+};
+export const SetRole = async (id, params) => {
+  const res = await post(`Auth/SetRole/${id}`, params);
   return res;
 };
 

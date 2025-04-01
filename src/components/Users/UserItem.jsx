@@ -1,22 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BlockUser } from "../../services/fetchAPI";
+import { BlockUser, GetRoles, SetRole } from "../../services/fetchAPI";
 
-export default function UserItem({ user, onDelete }) {
+export default function UserItem({ user, onDelete, onSetRole }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenBlock, setIsOpenBlock] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isBlock, setIsBlock] = useState(user?.isBlock);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [role, setRole] = useState("");
+  const [roles, setRoles] = useState([]);
   const handleOpenModal = async () => {
     try {
       const response = await axios.get(
         `https://localhost:7224/api/Users/${user.id}`
       );
       const userData = response.data;
-      setIsAdmin(
-        userData.roles.includes("d2fd87b7-f1f8-4f61-8a7f-d120beabefb3")
-      );
       setIsOpen(isOpen ? false : true);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -41,19 +39,21 @@ export default function UserItem({ user, onDelete }) {
     onDelete(id, handleOpenModalDelete);
   };
   const handleSave = async (id) => {
-    try {
-      const roleId = isAdmin ? "d2fd87b7-f1f8-4f61-8a7f-d120beabefb3" : "";
-      await axios.put(`https://localhost:7224/api/Auth/SetRole/${id}`, {
-        roleId: roleId,
-      });
-      setIsOpen(false);
-    } catch (error) {
-      console.error("Error updating user role:", error);
-    }
+    onSetRole(id, role, handleOpenModal);
   };
   useEffect(() => {
     setIsBlock(user?.isBlock);
   }, [user]);
+  useEffect(() => {
+    const fetchAPI = async () => {
+      await GetRoles()
+        .then((res) => {
+          setRoles(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchAPI();
+  }, []);
 
   return (
     <>
@@ -184,13 +184,22 @@ export default function UserItem({ user, onDelete }) {
               />
             </label>
             <label class="block text-sm mb-2">
-              <span class="text-gray-700 dark:text-gray-400">Admin:</span>
-              <input
-                type="checkbox"
-                class="mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              />
+              <span class="text-gray-700 dark:text-gray-400">Role:</span>
+              <select
+                class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
+                onChange={(e) => setRole(e.target.value)}
+              >
+                {roles.map((role, index) => {
+                  return (
+                    <option
+                      selected={role.id === user?.roles[0]}
+                      value={role?.id}
+                    >
+                      {role?.name}
+                    </option>
+                  );
+                })}
+              </select>
             </label>
             <div className="flex justify-end">
               <button
