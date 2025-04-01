@@ -6,9 +6,9 @@ export default function Users({ users, onDelete, onSetRole }) {
     return (
       <UserItem
         onDelete={onDelete}
+        onSetRole={onSetRole}
         user={item}
         key={key}
-        onSetRole={onSetRole}
       />
     );
   });

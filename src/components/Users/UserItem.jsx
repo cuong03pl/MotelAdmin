@@ -39,7 +39,7 @@ export default function UserItem({ user, onDelete, onSetRole }) {
     onDelete(id, handleOpenModalDelete);
   };
   const handleSave = async (id) => {
-    onSetRole(id, role, handleOpenModal);
+    await onSetRole(id, role, handleOpenModal);
   };
   useEffect(() => {
     setIsBlock(user?.isBlock);
@@ -189,16 +189,14 @@ export default function UserItem({ user, onDelete, onSetRole }) {
                 class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                 onChange={(e) => setRole(e.target.value)}
               >
-                {roles.map((role, index) => {
-                  return (
-                    <option
-                      selected={role.id === user?.roles[0]}
-                      value={role?.id}
-                    >
-                      {role?.name}
-                    </option>
-                  );
-                })}
+                {roles.map((role, index) => (
+                  <option
+                    selected={role.id === user?.roles[0]}
+                    value={role?.id}
+                  >
+                    {role?.name}
+                  </option>
+                ))}
               </select>
             </label>
             <div className="flex justify-end">

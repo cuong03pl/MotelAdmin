@@ -11,11 +11,16 @@ import ReportManagePage from "../pages/ReportManagePage";
 import ReviewManagePage from "../pages/ReviewManagePage";
 import UserManagePage from "../pages/UserManagePage";
 import RoleManagePage from "../pages/RoleManagePage";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export const publicRoutes = [
   {
     path: routes.home,
-    component: <DashboardPage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <DashboardPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.login,
@@ -29,40 +34,76 @@ export const publicRoutes = [
   },
   {
     path: routes.post_manage,
-    component: <PostManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <PostManagePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.user_manage,
-    component: <UserManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <UserManagePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.report_manage,
-    component: <ReportManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <ReportManagePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.review_manage,
-    component: <ReviewManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <ReviewManagePage />
+      </ProtectedRoute>
+    ),
   },
 
   {
     path: routes.news_manage,
-    component: <NewsManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <NewsManagePage />
+      </ProtectedRoute>
+    ),
   },
 
   {
     path: routes.category_manage,
-    component: <CategoryManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <CategoryManagePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.booking,
-    component: <BookingManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <BookingManagePage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.login_history,
-    component: <LoginHistoryPage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <LoginHistoryPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: routes.role_manage,
-    component: <RoleManagePage />,
+    component: (
+      <ProtectedRoute requiredRole="Admin">
+        <RoleManagePage />
+      </ProtectedRoute>
+    ),
   },
 ];

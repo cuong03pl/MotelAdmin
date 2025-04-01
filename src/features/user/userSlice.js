@@ -1,16 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { jwtDecode } from "jwt-decode";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
     user_token: null,
+    role: "",
   },
   reducers: {
     setUser: (state, actions) => {
-      state.user_token = actions.payload;
+      const token = actions.payload;
+      state.user_token = token;
+      try {
+        const decoded = jwtDecode(token);
+        state.role = decoded.role;
+      } catch (error) {
+        console.error("Failed to decode JWT:", error);
+        state.role = null;
+      }
     },
     logOut: (state, action) => {
-      state.user_token = "";
+      state.user_token = null;
+      state.role = null;
     },
   },
 });
