@@ -12,6 +12,7 @@ import ReviewManagePage from "../pages/ReviewManagePage";
 import UserManagePage from "../pages/UserManagePage";
 import RoleManagePage from "../pages/RoleManagePage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import RedirectIfLoggedIn from "../components/RedirectIfLoggedIn";
 
 export const publicRoutes = [
   {
@@ -24,12 +25,20 @@ export const publicRoutes = [
   },
   {
     path: routes.login,
-    component: <LoginPage />,
+    component: (
+      <RedirectIfLoggedIn>
+        <LoginPage />
+      </RedirectIfLoggedIn>
+    ),
     layout: null,
   },
   {
     path: routes.register,
-    component: <RegisterPage />,
+    component: (
+      <RedirectIfLoggedIn>
+        <RegisterPage />
+      </RedirectIfLoggedIn>
+    ),
     layout: null,
   },
   {

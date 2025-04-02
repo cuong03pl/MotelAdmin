@@ -41,8 +41,8 @@ export default function LoginPage() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const notifyInvalid = () =>
-    toast.error("Your username or password is invalid. Please try again.", {
+  const notifyInvalid = (message) =>
+    toast.error(message, {
       position: "bottom-right",
       pauseOnHover: false,
     });
@@ -57,13 +57,17 @@ export default function LoginPage() {
         dispatch(setUser(token));
         const decoded = jwtDecode(token);
         const role = decoded.role;
-        if (role === "admin") {
-          window.location.href = "/dashboard";
-        } else {
+        console.log(role);
+
+        if (role === "Admin") {
           window.location.href = "/";
+        } else {
+          notifyInvalid("Bạn không có quyền truy cập trang web.");
         }
       } else {
-        notifyInvalid();
+        notifyInvalid(
+          "Tài khoản hoặc mật khẩu không hợp lệ. Vui lòng nhập lại."
+        );
       }
     });
   };
