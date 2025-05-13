@@ -61,6 +61,11 @@ export const GetPostCountsByMonth = async () => {
   return res;
 };
 
+export const GetReportsByReason = async () => {
+  const res = await get(`Reports/GetReportsByReason`);
+  return res;
+};
+
 export const CheckFavorite = async (params) => {
   const res = await get(`Users/CheckFavorite`, params);
   return res;

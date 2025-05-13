@@ -97,7 +97,7 @@ export default function BookingManagePage() {
               <th className="p-4">Người cọc</th>
               <th className="p-4">Số điện thoại người cọc</th>
               <th className="p-4">Giá</th>
-              <th className="p-4">Tiền cọc</th>
+              <th className="p-4">Tiền trả</th>
               <th className="p-4">Trạng thái</th>
               <th className="p-4"></th>
             </tr>

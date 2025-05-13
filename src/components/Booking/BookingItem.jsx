@@ -148,7 +148,7 @@ export default function BookingItem({ booking }) {
                 />
               </label>
               <label class="block text-sm mb-2">
-                <span class="text-gray-700 dark:text-gray-400">Tiền cọc:</span>
+                <span class="text-gray-700 dark:text-gray-400">Tiền trả:</span>
                 <input
                   class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                   placeholder=""
