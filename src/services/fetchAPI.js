@@ -26,6 +26,10 @@ export const GetUserByToken = async (token) => {
   const res = await get(`Users/${token}`);
   return res;
 };
+export const GetUserById = async (id) => {
+  const res = await get(`Users/${id}`);
+  return res;
+};
 export const GetPostsByProvinceSlug = async (id, params) => {
   const res = await get(`Posts/GetPostsByProvinceSlug/${id}`, { params });
   return res;
@@ -59,6 +63,11 @@ export const GetPostCountsByMonth = async () => {
 
 export const CheckFavorite = async (params) => {
   const res = await get(`Users/CheckFavorite`, params);
+  return res;
+};
+
+export const CheckHasPaid = async (params) => {
+  const res = await get(`Booking/CheckPayed`, params);
   return res;
 };
 
@@ -261,11 +270,22 @@ export const BrowseReport = async (id) => {
 };
 
 export const ExportReport = async (params) => {
-  const res = await get(`Reports/export-pdf`, params);
+  const res = await get(`Reports/export-pdf`, {
+    params,
+    responseType: 'blob',
+    headers: {
+      'Accept': 'application/pdf'
+    }
+  });
   return res;
 };
 
 export const ExportBooking = async () => {
-  const res = await get(`Booking/export-pdf`);
+  const res = await get(`Booking/export-pdf`, {
+    responseType: 'blob',
+    headers: {
+      'Accept': 'application/pdf'
+    }
+  });
   return res;
 };

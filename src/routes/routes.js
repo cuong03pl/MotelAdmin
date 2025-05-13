@@ -18,7 +18,7 @@ export const publicRoutes = [
   {
     path: routes.home,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <DashboardPage />
       </ProtectedRoute>
     ),
@@ -44,7 +44,7 @@ export const publicRoutes = [
   {
     path: routes.post_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <PostManagePage />
       </ProtectedRoute>
     ),
@@ -52,7 +52,7 @@ export const publicRoutes = [
   {
     path: routes.user_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <UserManagePage />
       </ProtectedRoute>
     ),
@@ -60,7 +60,7 @@ export const publicRoutes = [
   {
     path: routes.report_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <ReportManagePage />
       </ProtectedRoute>
     ),
@@ -68,7 +68,7 @@ export const publicRoutes = [
   {
     path: routes.review_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <ReviewManagePage />
       </ProtectedRoute>
     ),
@@ -77,7 +77,7 @@ export const publicRoutes = [
   {
     path: routes.news_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <NewsManagePage />
       </ProtectedRoute>
     ),
@@ -86,7 +86,7 @@ export const publicRoutes = [
   {
     path: routes.category_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <CategoryManagePage />
       </ProtectedRoute>
     ),
@@ -94,7 +94,7 @@ export const publicRoutes = [
   {
     path: routes.booking,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <BookingManagePage />
       </ProtectedRoute>
     ),
@@ -102,7 +102,7 @@ export const publicRoutes = [
   {
     path: routes.login_history,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <LoginHistoryPage />
       </ProtectedRoute>
     ),
@@ -110,7 +110,7 @@ export const publicRoutes = [
   {
     path: routes.role_manage,
     component: (
-      <ProtectedRoute requiredRole="Admin">
+      <ProtectedRoute>
         <RoleManagePage />
       </ProtectedRoute>
     ),

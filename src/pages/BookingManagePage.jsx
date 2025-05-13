@@ -44,28 +44,43 @@ export default function BookingManagePage() {
     setSearchParams({ page: event.selected + 1 });
   };
   const handleExportReport = async () => {
-    await ExportBooking()
-      .then((res) => {
-        const blob = new Blob([res.data], { type: "application/pdf" });
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, "");
-        const fileName = `booking_${timestamp}.pdf`;
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const res = await ExportBooking();
+      
+      // Tạo blob từ dữ liệu phản hồi
+      const blob = new Blob([res.data], { type: 'application/pdf' });
+      
+      // Kiểm tra kích thước blob để xác nhận nó có dữ liệu
+      if (blob.size === 0) {
+        alert('Không có dữ liệu để xuất báo cáo hoặc có lỗi xảy ra');
+        return;
+      }
+      
+      // Tạo URL để tải xuống
+      const url = window.URL.createObjectURL(blob);
+      
+      // Tạo phần tử a để tải xuống
+      const a = document.createElement('a');
+      const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, '');
+      const fileName = `booking_${timestamp}.pdf`;
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      // Giải phóng URL object
+      window.URL.revokeObjectURL(url);
+      
+    } catch (err) {
+      console.error('Lỗi khi xuất báo cáo:', err);
+      alert('Không thể xuất báo cáo. Vui lòng thử lại sau.');
+    }
   };
   return (
     <div className="w-full overflow-hidden rounded-lg shadow-xs">
       <div className="flex items-center justify-between">
-        <div className="text-[24px] font-semibold">Quản lý cọc phòng</div>
+        <div className="text-[24px] font-semibold">Quản lý thanh toán</div>
         <button
           onClick={handleExportReport}
           type="button"
@@ -83,6 +98,7 @@ export default function BookingManagePage() {
               <th className="p-4">Số điện thoại người cọc</th>
               <th className="p-4">Giá</th>
               <th className="p-4">Tiền cọc</th>
+              <th className="p-4">Trạng thái</th>
               <th className="p-4"></th>
             </tr>
           </thead>

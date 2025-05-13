@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { convertPrice } from "../../utils/convertPrice";
 
 export default function BookingItem({ booking }) {
   console.log(booking);
@@ -25,10 +26,27 @@ export default function BookingItem({ booking }) {
           </div>
         </td>
         <td class="p-4 text-sm">
-          <div className="text-sm line-clamp-4">{booking?.post?.price}</div>
+          <div className="text-sm line-clamp-4">{convertPrice(booking?.post?.price)}</div>
         </td>
         <td class="p-4 text-sm">
-          <div className="text-sm line-clamp-4">{booking?.price}</div>
+          <div className="text-sm line-clamp-4">{convertPrice(booking?.price)}</div>
+        </td>
+        <td class="p-4 text-sm">
+          {booking?.status === 1 && (
+            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+              Thành công
+            </span>
+          )}
+          {booking?.status === 0 && (
+            <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+              Chờ xử lý
+            </span>
+          )}
+          {booking?.status === 2 && (
+            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">
+              Đã hủy
+            </span>
+          )}
         </td>
         <td class="px-2">
           <div class="flex items-center text-sm">
@@ -126,7 +144,7 @@ export default function BookingItem({ booking }) {
                   class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                   placeholder=""
                   readOnly
-                  value={booking?.post?.price}
+                  value={convertPrice(booking?.post?.price)}
                 />
               </label>
               <label class="block text-sm mb-2">
@@ -135,7 +153,7 @@ export default function BookingItem({ booking }) {
                   class="block w-full mt-1 text-sm border-[#e2e8f0] border-[1px] border-[solid] py-[8px] px-3 rounded-[8px] dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray"
                   placeholder=""
                   readOnly
-                  value={booking?.price}
+                  value={convertPrice(booking?.price)}
                 />
               </label>
             </div>
@@ -144,14 +162,19 @@ export default function BookingItem({ booking }) {
                 <span class="text-gray-700 dark:text-gray-400">
                   Trạng thái:{" "}
                 </span>
-                {booking?.status === 2 && (
+                {booking?.status === 1 && (
                   <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                     Thành công
                   </span>
                 )}
-                {booking?.status === 1 && (
+                {booking?.status === 0 && (
                   <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
                     Chờ xử lý
+                  </span>
+                )}
+                {booking?.status === 2 && (
+                  <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">
+                    Đã hủy
                   </span>
                 )}
               </label>

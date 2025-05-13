@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BlockUser, GetRoles, SetRole } from "../../services/fetchAPI";
+import { BlockUser, GetRoles, GetUserById, SetRole } from "../../services/fetchAPI";
 
 export default function UserItem({ user, onDelete, onSetRole }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,9 +11,7 @@ export default function UserItem({ user, onDelete, onSetRole }) {
   const [roles, setRoles] = useState([]);
   const handleOpenModal = async () => {
     try {
-      const response = await axios.get(
-        `https://localhost:7224/api/Users/${user.id}`
-      );
+      const response = await GetUserById(user.id);
       const userData = response.data;
       setIsOpen(isOpen ? false : true);
     } catch (error) {

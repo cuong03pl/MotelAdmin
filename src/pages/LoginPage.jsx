@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { Login } from "../services/fetchAPI";
-import { jwtDecode } from "jwt-decode";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,15 +55,7 @@ export default function LoginPage() {
       if (res.data) {
         const token = res.data;
         dispatch(setUser(token));
-        const decoded = jwtDecode(token);
-        const role = decoded.role;
-        console.log(role);
-
-        if (role === "Admin") {
-          window.location.href = "/";
-        } else {
-          notifyInvalid("Bạn không có quyền truy cập trang web.");
-        }
+        window.location.href = "/";
       } else {
         notifyInvalid(
           "Tài khoản hoặc mật khẩu không hợp lệ. Vui lòng nhập lại."

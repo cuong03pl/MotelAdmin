@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TinyEditor from "../Editor/Editor";
-import { BrowsePost } from "../../services/fetchAPI";
+import { BrowsePost, CheckHasPaid } from "../../services/fetchAPI";
 
 export default function PostItem({ post, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenBrowse, setIsOpenBrowse] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isBrowse, setIsBrowse] = useState(post?.is_Browse);
+  const [isPaid, setIsPaid] = useState(false);
+  
   // Xử lý duyệt bài viết
   const handleBrowse = async (status) => {
     try {
@@ -30,6 +32,24 @@ export default function PostItem({ post, onDelete }) {
   const handleDeletePost = async (id) => {
     onDelete(id, handleOpenModalDelete);
   };
+  
+  useEffect(() => {
+    const checkPaymentStatus = async () => {
+      try {
+        const res = await CheckHasPaid({ params: { postId: post?.id } });
+        console.log(res);
+        setIsPaid(res?.data || false);
+      } catch (error) {
+        console.error("Error checking payment status:", error);
+        setIsPaid(false);
+      }
+    };
+
+    if (post?.id) {
+      checkPaymentStatus();
+    }
+  }, [post?.id]);
+  
   useEffect(() => {
     setIsBrowse(post.is_Browse);
   }, [post]);
@@ -54,7 +74,7 @@ export default function PostItem({ post, onDelete }) {
         <td class="p-4 text-sm">{post?.price}</td>
         <td class="p-4 text-sm text-nowrap">{`${post?.location.province} - ${post?.location?.district}`}</td>
         <td class="p-4 text-sm text-nowrap">
-          {post?.area} km<sup>2</sup>
+          {post?.area} m<sup>2</sup>
         </td>
         <td class="p-4 text-xs">
           {post?.available && (
@@ -76,6 +96,17 @@ export default function PostItem({ post, onDelete }) {
           )}
           {isBrowse === 0 && (
             <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+              False
+            </span>
+          )}
+        </td>
+        <td class="p-4 text-xs">
+          {isPaid ? (
+            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+              True
+            </span>
+          ) : (
+            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">
               False
             </span>
           )}
@@ -258,6 +289,22 @@ export default function PostItem({ post, onDelete }) {
 
                 {isBrowse === 0 && (
                   <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+                    False
+                  </span>
+                )}
+              </label>
+            </div>
+            <div className="flex gap-6 mt-2">
+              <label class="flex items-center gap-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Thanh toán:{" "}
+                </span>
+                {isPaid ? (
+                  <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                    True
+                  </span>
+                ) : (
+                  <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">
                     False
                   </span>
                 )}

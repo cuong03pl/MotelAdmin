@@ -68,6 +68,7 @@ export default function PostManagePage() {
               <th class="p-4">Diện tích</th>
               <th class="p-4">Trạng thái</th>
               <th class="p-4">Duyệt</th>
+              <th class="p-4">Thanh toán</th>
               <th class="p-4"></th>
             </tr>
           </thead>

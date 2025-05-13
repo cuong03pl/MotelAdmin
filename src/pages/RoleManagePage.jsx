@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Roles from "../components/Roles/Roles";
-import { CreateRole, DeleteRole, UpdateRole } from "../services/fetchAPI";
+import { CreateRole, DeleteRole, GetRoles, UpdateRole } from "../services/fetchAPI";
 
 export default function RoleManagePage() {
   const [roles, setRoles] = useState([]);
@@ -11,9 +11,7 @@ export default function RoleManagePage() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const response = await axios.get(
-          "https://localhost:7224/api/Auth/GetRoles"
-        );
+        const response = await GetRoles();
         setRoles(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);

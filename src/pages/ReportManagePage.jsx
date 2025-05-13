@@ -54,25 +54,38 @@ export default function ReportManagePage() {
   };
 
   const handleExportReport = async () => {
-    await ExportReport({
-      responseType: "blob",
-    })
-      .then((res) => {
-        const blob = new Blob([res.data], { type: "application/pdf" });
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, "");
-        const fileName = `report_${timestamp}.pdf`;
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const res = await ExportReport();
+      
+      // Tạo blob từ dữ liệu phản hồi
+      const blob = new Blob([res.data], { type: 'application/pdf' });
+      
+      // Kiểm tra kích thước blob để xác nhận nó có dữ liệu
+      if (blob.size === 0) {
+        alert('Không có dữ liệu để xuất báo cáo hoặc có lỗi xảy ra');
+        return;
+      }
+      
+      // Tạo URL để tải xuống
+      const url = window.URL.createObjectURL(blob);
+      
+      // Tạo phần tử a để tải xuống
+      const a = document.createElement('a');
+      const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, '');
+      const fileName = `report_${timestamp}.pdf`;
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      // Giải phóng URL object
+      window.URL.revokeObjectURL(url);
+      
+    } catch (err) {
+      console.error('Lỗi khi xuất báo cáo:', err);
+      alert('Không thể xuất báo cáo. Vui lòng thử lại sau.');
+    }
   };
   return (
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
