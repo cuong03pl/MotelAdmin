@@ -269,6 +269,11 @@ export const BlockUser = async (id, status) => {
   return res;
 };
 
+export const ApproveUser = async (id, status) => {
+  const res = await put(`Users/verify?id=${id}&isVerified=${status}`);
+  return res;
+};
+
 export const BrowseReport = async (id) => {
   const res = await put(`Reports/Browse?id=${id}`);
   return res;

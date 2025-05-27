@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BlockUser, GetRoles, GetUserById, SetRole } from "../../services/fetchAPI";
+import { ApproveUser, BlockUser, GetRoles, GetUserById, SetRole } from "../../services/fetchAPI";
 
-export default function UserItem({ user, onDelete, onSetRole }) {
+export default function UserItem({ user, onDelete, onSetRole, onApprove }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenBlock, setIsOpenBlock] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isOpenApprove, setIsOpenApprove] = useState(false);
   const [isBlock, setIsBlock] = useState(user?.isBlock);
+  const [isVerified, setIsVerified] = useState(user?.isVerified);
   const [role, setRole] = useState("");
   const [roles, setRoles] = useState([]);
   const handleOpenModal = async () => {
@@ -39,8 +41,26 @@ export default function UserItem({ user, onDelete, onSetRole }) {
   const handleSave = async (id) => {
     await onSetRole(id, role, handleOpenModal);
   };
+  const handleOpenModalApprove = () => {
+    setIsOpenApprove(isOpenApprove ? false : true);
+  };
+  const handleApprove = async (status) => {
+    try {
+      console.log(user?.id, status);
+      
+      await ApproveUser(user?.id, status);
+      setIsVerified(status);
+      setIsOpenApprove(false);
+      if (onApprove) {
+        onApprove(); // Trigger reload
+      }
+    } catch (error) {
+      console.error("Error approving user:", error);
+    }
+  };
   useEffect(() => {
     setIsBlock(user?.isBlock);
+    setIsVerified(user?.isVerified);
   }, [user]);
   useEffect(() => {
     const fetchAPI = async () => {
@@ -72,8 +92,38 @@ export default function UserItem({ user, onDelete, onSetRole }) {
             </span>
           )}
         </td>
+        <td class="p-4 text-xs">
+          {isVerified && (
+            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+              Đã duyệt
+            </span>
+          )}
+          {!isVerified && (
+            <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+              Chưa duyệt
+            </span>
+          )}
+        </td>
         <td class="p-4">
           <div class="flex items-center text-sm">
+            <button
+              onClick={handleOpenModalApprove}
+              class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+              title={isVerified ? "Hủy duyệt" : "Duyệt người dùng"}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
             <button
               onClick={handleOpenModalBlock}
               class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -311,6 +361,57 @@ export default function UserItem({ user, onDelete, onSetRole }) {
               >
                 Delete
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isOpenApprove && (
+        <div className="fixed inset-0 z-[99999] flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+          <div class="px-4 py-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-[600px]">
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-[24px] font-semibold">
+                {!isVerified ? "Duyệt người dùng" : "Hủy duyệt người dùng"}
+              </div>
+              <div className="">
+                <button
+                  onClick={handleOpenModalApprove}
+                  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div>
+              <div className="text-sm mb-6">
+                {!isVerified
+                  ? "Bạn có chắc chắn muốn duyệt người dùng này không?"
+                  : "Bạn có chắc chắn muốn hủy duyệt người dùng này không?"}
+              </div>
+              <div className="flex justify-end gap-4">
+                <button
+                  className="px-4 py-2 text-sm font-medium text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg hover:bg-gray-100"
+                  onClick={handleOpenModalApprove}
+                >
+                  Hủy
+                </button>
+                <button
+                  className="px-4 py-2 text-sm font-medium text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  onClick={() => handleApprove(!isVerified)}
+                >
+                  Xác nhận
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -13,22 +13,38 @@ export default function UserManagePage() {
   const initialPage = Number(searchParams.get("page")) || 1;
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    const fetchAPI = () => {
-      GetUsers({
-        params: {
+    const fetchAPI = async () => {
+      setLoading(true);
+      try {
+        const params = {
           page: page,
           pageSize: pagination.pageSize,
-        },
-      })
-        .then((res) => {
-          setUsers(res.data.data);
-          setTotalPage(res?.data?.totalPages);
-        })
-        .catch((err) => console.log(err));
+        };
+        
+        const response = await GetUsers({ params });
+        setUsers(response.data.data);
+        setTotalPage(response?.data?.totalPages);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchAPI();
   }, [isReload, page]);
+
+  useEffect(() => {
+    const pageParam = Number(searchParams.get("page")) || 1;
+    setSearchParams({ page: Number(pageParam) });
+
+    if (page !== pageParam) {
+      setPage(pageParam);
+    }
+  }, [searchParams]);
+
   const handleDelete = async (id, handleOpenModalDelete) => {
     try {
       await DeleteUser(id);
@@ -52,40 +68,47 @@ export default function UserManagePage() {
       console.error("Error updating user role:", error);
     }
   };
-  useEffect(() => {
-    const pageParam = Number(searchParams.get("page")) || 1;
-    setSearchParams({ page: Number(pageParam) });
 
-    if (page !== pageParam) {
-      setPage(pageParam);
-    }
-  }, [searchParams]);
+  const handleApproveUser = () => {
+    setIsReload(isReload ? false : true);
+  };
+
   const handlePageClick = (event) => {
     setSearchParams({ page: event.selected + 1 });
   };
+
   return (
     <div className="w-full overflow-hidden rounded-lg shadow-xs">
-      <div className="text-[24px] font-semibold">Quản lý người dùng</div>
+      <div className="text-[24px] font-semibold mb-4">Quản lý người dùng</div>
+      
       <div className="w-full overflow-x-auto">
-        <table className="w-full whitespace-no-wrap">
-          <thead>
-            <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-              <th className="p-4">Họ và tên</th>
-              <th className="p-4">Username</th>
-              <th className="p-4">Email</th>
-              <th className="p-4">Số điện thoại</th>
-              <th className="p-4">Chặn</th>
-              <th className="p-4"></th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-            <Users
-              onDelete={handleDelete}
-              users={users}
-              onSetRole={handleSetRole}
-            />
-          </tbody>
-        </table>
+        {loading ? (
+          <div className="text-center py-4">Đang tải dữ liệu...</div>
+        ) : users.length === 0 ? (
+          <div className="text-center py-4">Không tìm thấy người dùng nào</div>
+        ) : (
+          <table className="w-full whitespace-no-wrap">
+            <thead>
+              <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <th className="p-4">Họ và tên</th>
+                <th className="p-4">Username</th>
+                <th className="p-4">Email</th>
+                <th className="p-4">Số điện thoại</th>
+                <th className="p-4">Chặn</th>
+                <th className="p-4">Trạng thái</th>
+                <th className="p-4"></th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+              <Users
+                onDelete={handleDelete}
+                users={users}
+                onSetRole={handleSetRole}
+                onApprove={handleApproveUser}
+              />
+            </tbody>
+          </table>
+        )}
       </div>
       <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
         <span className="flex items-center col-span-3"></span>
@@ -94,27 +117,27 @@ export default function UserManagePage() {
           <ReactPaginate
             nextLabel={
               <svg
-                class="w-4 h-4 fill-current"
+                className="w-4 h-4 fill-current"
                 aria-hidden="true"
                 viewBox="0 0 20 20"
               >
                 <path
                   d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
+                  clipRule="evenodd"
+                  fillRule="evenodd"
                 ></path>
               </svg>
             }
             previousLabel={
               <svg
-                class="w-4 h-4 fill-current"
+                className="w-4 h-4 fill-current"
                 aria-hidden="true"
                 viewBox="0 0 20 20"
               >
                 <path
                   d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
+                  clipRule="evenodd"
+                  fillRule="evenodd"
                 ></path>
               </svg>
             }
